@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Route, useLocation } from 'wouter'
 
 import Nav from './components/Nav'
 
 import Home from './pages/Home'
 import Trending from './pages/Trending'
+import Settings from './pages/Settings'
+import Feed from './pages/Feed'
+import Subscriptions from './pages/Subscriptions'
 
 export const ScrollToTop = () => {
-  const { pathname } = useLocation()
+  const [location] = useLocation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [location])
 
   return null
 }
@@ -21,10 +24,11 @@ const App = () => {
     <div className="App">
       <ScrollToTop />
       <Nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/trending" element={<Trending />} />
-        </Routes>
+        <Route path="/" component={Home} />
+        <Route path="/trending" component={Trending} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/feed" component={Feed} />
+        <Route path="/subscriptions" component={Subscriptions} />
       </Nav>
     </div>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Router } from 'wouter'
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
@@ -10,7 +10,6 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 import { Dict } from '@chakra-ui/utils'
 
-import './index.css'
 import '@fontsource/inter/variable.css'
 
 /*

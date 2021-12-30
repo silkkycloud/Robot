@@ -3,7 +3,7 @@ import { useBreakpointValue, useColorModeValue } from '@chakra-ui/react'
 
 import { timeFormat, numberFormat } from '../functions/format'
 
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'wouter'
 import {
   Box,
   Image,
@@ -36,75 +36,86 @@ const Video = (props: VideoProps) => (
   <Box display="block" overflow="hidden">
     <Box experimental_spaceY={4}>
       {/* Thumbnail */}
-      <RouterLink to={props.url}>
-        <AspectRatio ratio={16 / 9}>
-          <Image
-            fit="fill"
-            minHeight="100%"
-            minWidth="100%"
-            src={props.thumbnail}
-            loading="lazy"
-            alt={props.title}
-            htmlWidth={210}
-            htmlHeight={118}
-            bg={useColorModeValue('gray.300', 'neutral.800')}
-          />
-        </AspectRatio>
-        <Box pos="relative">
-          <Box pos="absolute" bottom={0} right={0} pb={1} pr={1}>
-            <Badge px={1.5} py={0.5} colorScheme="blackAlpha" variant="solid">
-              {timeFormat(props.duration)}
-            </Badge>
+      <RouterLink href={props.url}>
+        <a>
+          <AspectRatio ratio={16 / 9}>
+            <Image
+              fit="fill"
+              minHeight="100%"
+              minWidth="100%"
+              src={props.thumbnail}
+              loading="lazy"
+              alt={props.title}
+              htmlWidth={210}
+              htmlHeight={118}
+              bg={useColorModeValue('gray.300', 'neutral.800')}
+            />
+          </AspectRatio>
+          <Box pos="relative">
+            <Box pos="absolute" bottom={0} right={0} pb={1} pr={1}>
+              <Badge px={1.5} py={0.5} colorScheme="blackAlpha" variant="solid">
+                {timeFormat(props.duration)}
+              </Badge>
+            </Box>
           </Box>
-        </Box>
+        </a>
       </RouterLink>
 
       {/* Details */}
       <Flex flexDir="row" pos="relative">
-        <RouterLink to={props.uploaderUrl}>
-          <Box display="block" mr={2}>
-            <Avatar
-              borderRadius="full"
-              size={useBreakpointValue({ base: 'md', sm: 'sm', lg: 'md' })}
-              src={props.uploaderAvatar}
-              loading="lazy"
-              name={props.uploaderName}
-              bg={useColorModeValue('gray.300', 'neutral.800')}
-            />
-          </Box>
+        <RouterLink href={props.uploaderUrl}>
+          <a>
+            <Box display="block" mr={2}>
+              <Avatar
+                borderRadius="full"
+                size={useBreakpointValue({ base: 'md', sm: 'sm', lg: 'md' })}
+                src={props.uploaderAvatar}
+                loading="lazy"
+                name={props.uploaderName}
+                bg={useColorModeValue('gray.300', 'neutral.800')}
+              />
+            </Box>
+          </a>
         </RouterLink>
         <Box experimental_spaceY={1} pr={2}>
-          <RouterLink to={props.url}>
-            <Heading as="h3" size="xs" noOfLines={2}>
-              {props.title}
-            </Heading>
+          <RouterLink href={props.url}>
+            <a>
+              <Heading as="h3" size="xs" noOfLines={2}>
+                {props.title}
+              </Heading>
+            </a>
           </RouterLink>
           <Box mt={1}>
-            <RouterLink to={props.uploaderUrl}>
-              <Flex
-                flexDir="row"
-                alignItems="center"
-                color={useColorModeValue('gray.600', 'neutral.400')}
-              >
-                <Link fontSize={{ base: 'xs', '2xl': 'sm' }}>
-                  {props.uploaderName}
-                </Link>
-                {props.uploaderVerified && (
-                  <Box ml={1}>
-                    <HiCheckCircle width={3} height={3} />
-                  </Box>
-                )}
-              </Flex>
-            </RouterLink>
-            <RouterLink to={props.url}>
-              <Flex flexDir="row" alignItems="center">
-                <Text
-                  fontSize={{ base: 'xs', '2xl': 'sm' }}
+            <RouterLink href={props.uploaderUrl}>
+              <a>
+                <Flex
+                  flexDir="row"
+                  alignItems="center"
                   color={useColorModeValue('gray.600', 'neutral.400')}
                 >
-                  {numberFormat(props.views)} views &#8226; {props.uploadedDate}
-                </Text>
-              </Flex>
+                  <Link fontSize={{ base: 'xs', '2xl': 'sm' }}>
+                    {props.uploaderName}
+                  </Link>
+                  {props.uploaderVerified && (
+                    <Box ml={1}>
+                      <HiCheckCircle width={3} height={3} />
+                    </Box>
+                  )}
+                </Flex>
+              </a>
+            </RouterLink>
+            <RouterLink href={props.url}>
+              <a>
+                <Flex flexDir="row" alignItems="center">
+                  <Text
+                    fontSize={{ base: 'xs', '2xl': 'sm' }}
+                    color={useColorModeValue('gray.600', 'neutral.400')}
+                  >
+                    {numberFormat(props.views)} views &#8226;{' '}
+                    {props.uploadedDate}
+                  </Text>
+                </Flex>
+              </a>
             </RouterLink>
           </Box>
         </Box>
