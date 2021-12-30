@@ -6,10 +6,8 @@ import { Link as RouterLink } from 'react-router-dom'
 import {
   Box,
   Flex,
-  Drawer,
   DrawerContent,
   DrawerOverlay,
-  useDisclosure,
   Image,
   DrawerCloseButton,
   DrawerHeader,
@@ -17,14 +15,18 @@ import {
   DrawerFooter,
   Tag,
   Stack,
-  useColorModeValue,
   VisuallyHidden,
   Icon,
+  Drawer,
+  useDisclosure,
+  useColorModeValue,
+  useColorMode,
 } from '@chakra-ui/react'
 import { AiFillFire, AiFillHeart } from 'react-icons/ai'
 import { IoIosSettings } from 'react-icons/io'
 import { HiMenuAlt2 } from 'react-icons/hi'
 import { FaRss } from 'react-icons/fa'
+import { MdDarkMode, MdLightMode } from 'react-icons/md'
 
 import state from '../state'
 
@@ -79,9 +81,8 @@ export const NavLink = (props: NavLinkProps) => {
     <Box
       as={RouterLink}
       to={props.href}
-      key={props.href}
-      px={2}
-      py={2}
+      key={props.name}
+      p={2}
       rounded="md"
       color={pathname === props.href ? selectedColor : normalColor}
       bg={pathname === props.href ? selectedBgColor : ''}
@@ -119,32 +120,91 @@ export const NavLinks = () => (
   </>
 )
 
+export const ThemeButton = () => {
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  return (
+    <Box
+      as="button"
+      p={2}
+      rounded="md"
+      color={useColorModeValue('gray.600', 'neutral.400')}
+      _hover={{ bg: useColorModeValue('gray.100', 'neutral.900') }}
+      fontSize="sm"
+      fontWeight="medium"
+      flexShrink={0}
+      onClick={() => toggleColorMode()}
+    >
+      <Flex flexDir="row" alignItems="center">
+        <Icon
+          as={colorMode === 'light' ? MdDarkMode : MdLightMode}
+          flexShrink={0}
+          mr={3}
+          w={6}
+          h={6}
+          aria-hidden="true"
+          color="gray.400"
+        />
+        Theme
+      </Flex>
+    </Box>
+  )
+}
+
 export interface SidebarOpenerProps {
   onOpen: () => void
 }
 
-export const SidebarOpener = (props: SidebarOpenerProps) => {
-  return (
-    <Box
-      as="button"
-      display={{ base: 'flex', lg: 'none' }}
-      px={4}
-      py={4}
-      borderRight="1px"
-      borderColor={useColorModeValue('gray.200', 'gray.900')}
-      onClick={() => props.onOpen()}
-    >
-      <VisuallyHidden>Open sidebar</VisuallyHidden>
-      <Icon
-        as={HiMenuAlt2}
-        w={8}
-        h={8}
-        color={useColorModeValue('gray.500', 'white')}
-        aria-hidden="true"
-      />
-    </Box>
-  )
+export const SidebarOpener = (props: SidebarOpenerProps) => (
+  <Box
+    as="button"
+    display={{ base: 'flex', lg: 'none' }}
+    px={4}
+    py={4}
+    borderRight="1px"
+    borderColor={useColorModeValue('gray.200', 'gray.900')}
+    onClick={() => props.onOpen()}
+  >
+    <VisuallyHidden>Open sidebar</VisuallyHidden>
+    <Icon
+      as={HiMenuAlt2}
+      w={8}
+      h={8}
+      color={useColorModeValue('gray.500', 'white')}
+      aria-hidden="true"
+    />
+  </Box>
+)
+
+export interface NavBarProps {
+  onOpen: () => void
 }
+
+export const NavBar = (props: NavBarProps) => (
+  <Flex
+    top={0}
+    zIndex={10}
+    flexShrink={0}
+    justifyContent={{ base: 'space-between', md: 'flex-end' }}
+    alignItems="center"
+    h={16}
+    shadow="base"
+    pos="sticky"
+    bg={useColorModeValue('white', 'neutral.800')}
+  >
+    <SidebarOpener onOpen={props.onOpen} />
+    <Flex px={4} flex={1} justify="space-between">
+      <Flex pos="relative" w="100%">
+        <Flex pos="absolute" insetY={0} left={0} alignItems="center">
+          I understand
+        </Flex>
+        <Flex pos="absolute" insetY={0} right={0} alignItems="center">
+          <ThemeButton />
+        </Flex>
+      </Flex>
+    </Flex>
+  </Flex>
+)
 
 export const StaticNav = () => {
   const snap = useSnapshot(state)
@@ -248,34 +308,10 @@ const Nav = (props: NavProps) => {
       {/* Static sidebar for desktop */}
       <StaticNav />
 
-      {/* Sidebar menu opener and search bar */}
+      {/* Primary page content */}
       <Flex pl={{ lg: 64 }} flexDir="column" flex={1}>
-        <Flex
-          top={0}
-          zIndex={10}
-          flexShrink={0}
-          justifyContent={{ base: 'space-between', md: 'flex-end' }}
-          alignItems="center"
-          h={16}
-          shadow="base"
-          pos="sticky"
-          bg={useColorModeValue('white', 'neutral.800')}
-        >
-          <SidebarOpener onOpen={onOpen} />
-          <Flex px={4} flex={1} justify="space-between">
-            <Flex w="100%" ml={{ lg: 0 }}>
-              <Box pos="relative" w="100%">
-                <Flex
-                  pos="absolute"
-                  insetY={0}
-                  left={0}
-                  alignItems="center"
-                ></Flex>
-              </Box>
-            </Flex>
-          </Flex>
-        </Flex>
-        {/* Primary page content */}
+        {/* Navbar menu */}
+        <NavBar onOpen={onOpen} />
         {props.children && <Box flex={1}>{props.children}</Box>}
       </Flex>
     </Box>
