@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Nav from './components/Nav'
+
+import Home from './pages/Home'
+import Trending from './pages/Trending'
+
+export const ScrollToTop = () => {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
 }
 
-export default App;
+const App = () => {
+  return (
+    <div className="App">
+      <ScrollToTop />
+      <Nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/trending" element={<Trending />} />
+        </Routes>
+      </Nav>
+    </div>
+  )
+}
+
+export default App

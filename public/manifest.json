@@ -1,25 +1,34 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Piped alternative YouTube frontend",
+  "description": "An open-source alternative frontend for YouTube which is efficient by design.",
+  "short_name": "Piped",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "./img/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "./img/icons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     },
     {
-      "src": "logo512.png",
+      "src": "./img/icons/android-chrome-maskable-192x192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "sizes": "512x512"
+      "purpose": "maskable"
+    },
+    {
+      "src": "./img/icons/android-chrome-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
+  "theme_color": "#fa4b4b",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "orientation": "any"
 }
