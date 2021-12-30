@@ -124,47 +124,45 @@ const Video = (props: VideoProps) => (
   </Box>
 )
 
-export const LoadingVideo = () => (
-  <Box display="block" overflow="hidden">
-    <Box experimental_spaceY={4}>
-      {/* Thumbnail */}
-      <AspectRatio ratio={16 / 9}>
-        <Skeleton
-          minWidth="100%"
-          minHeight="100%"
-          startColor={useColorModeValue('gray.300', 'neutral.800')}
-          endColor={useColorModeValue('gray.200', 'neutral.700')}
-        />
-      </AspectRatio>
+export const LoadingVideo = () => {
+  const startColor = useColorModeValue('gray.300', 'neutral.800')
+  const endColor = useColorModeValue('gray.200', 'neutral.700')
 
-      {/* Details */}
-      <Flex flexDir="row" pos="relative">
-        <Box display="block" mr={2}>
-          <SkeletonCircle
-            size="36px"
-            startColor={useColorModeValue('gray.300', 'neutral.800')}
-            endColor={useColorModeValue('gray.200', 'neutral.700')}
+  return (
+    <Box display="block" overflow="hidden">
+      <Box experimental_spaceY={4}>
+        {/* Thumbnail */}
+        <AspectRatio ratio={16 / 9}>
+          <Skeleton
+            minWidth="100%"
+            minHeight="100%"
+            startColor={startColor}
+            endColor={endColor}
           />
-        </Box>
-        <Box experimental_spaceY={1} pr={2}>
-          <Skeleton
-            startColor={useColorModeValue('gray.300', 'neutral.800')}
-            endColor={useColorModeValue('gray.200', 'neutral.700')}
-          >
-            Lorem ipsum dolor sit amet
-          </Skeleton>
-          <Skeleton
-            mt={1}
-            startColor={useColorModeValue('gray.300', 'neutral.800')}
-            endColor={useColorModeValue('gray.200', 'neutral.700')}
-          >
-            Lorem ipsum
-          </Skeleton>
-        </Box>
-      </Flex>
+        </AspectRatio>
+
+        {/* Details */}
+        <Flex flexDir="row" pos="relative">
+          <Box display="block" mr={2}>
+            <SkeletonCircle
+              size="36px"
+              startColor={startColor}
+              endColor={endColor}
+            />
+          </Box>
+          <Box experimental_spaceY={1} pr={2}>
+            <Skeleton startColor={startColor} endColor={endColor}>
+              Lorem ipsum dolor sit amet
+            </Skeleton>
+            <Skeleton mt={1} startColor={startColor} endColor={endColor}>
+              Lorem ipsum
+            </Skeleton>
+          </Box>
+        </Flex>
+      </Box>
     </Box>
-  </Box>
-)
+  )
+}
 
 export const LoadingVideos = () => (
   <>

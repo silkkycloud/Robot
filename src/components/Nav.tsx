@@ -97,7 +97,7 @@ export const NavLink = (props: NavLinkProps) => {
             w={6}
             h={6}
             aria-hidden="true"
-            color={location === props.href ? 'red.600' : 'gray.400'}
+            color={location === props.href ? 'red.600' : normalColor}
           />
           {props.name}
         </Flex>
@@ -122,12 +122,14 @@ export const NavLinks = () => (
 export const ThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
+  const normalColor = useColorModeValue('gray.600', 'neutral.400')
+
   return (
     <Box
       as="button"
       p={2}
       rounded="md"
-      color={useColorModeValue('gray.600', 'neutral.400')}
+      color={normalColor}
       _hover={{ bg: useColorModeValue('gray.100', 'neutral.900') }}
       fontSize="sm"
       fontWeight="medium"
@@ -142,7 +144,7 @@ export const ThemeButton = () => {
           w={6}
           h={6}
           aria-hidden="true"
-          color="gray.400"
+          color={normalColor}
         />
         Theme
       </Flex>
