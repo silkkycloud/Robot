@@ -58,7 +58,7 @@ const Trending = () => {
     trending = <LoadingVideos />
   } else {
     trending = trendingResults.map((video, i: number) => (
-      <Box as="li" key={i.toString()}>
+      <Box key={i.toString()}>
         <Video
           url={video.url}
           title={video.title}
@@ -86,7 +86,6 @@ const Trending = () => {
         columns={{ base: 1, sm: 2, md: 3, xl: 4, '2xl': 6 }}
         spacingX={{ sm: 4, md: 3 }}
         spacingY={{ base: 5, sm: 10 }}
-        as="ul"
       >
         {trending}
       </SimpleGrid>
