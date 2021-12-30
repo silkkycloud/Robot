@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import {
   Modal,
@@ -9,15 +9,13 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 
-export interface SearchProps {
-  isOpen: boolean
-  onOpen: () => void
-  onClose: () => void
-}
+import { NavContext } from './Nav'
 
-const Search = (props: SearchProps) => {
+const Search = () => {
+  const nav = useContext(NavContext)
+
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose}>
+    <Modal isOpen={nav.isSearchOpen} onClose={nav.onSearchClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Modal</ModalHeader>
