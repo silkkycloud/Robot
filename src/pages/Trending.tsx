@@ -50,7 +50,30 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
 }
 
 const Trending = (): JSX.Element => {
-  const [trending, trendingLoading] = useFetchTrending('US')
+  const [trendingResults, trendingLoading] = useFetchTrending('US')
+
+  let trending
+
+  if (trendingLoading) {
+    trending = <LoadingVideos />
+  } else {
+    trending = trendingResults.map((video, i: number) => (
+      <Box as="li" key={i.toString()}>
+        <Video
+          url={video.url}
+          title={video.title}
+          thumbnail={video.thumbnail}
+          uploaderName={video.uploaderName}
+          uploaderUrl={video.uploaderUrl}
+          uploaderAvatar={video.uploaderAvatar}
+          uploadedDate={video.uploadedDate}
+          duration={video.duration}
+          views={video.views}
+          uploaderVerified={video.uploaderVerified}
+        />
+      </Box>
+    ))
+  }
 
   return (
     <Box
@@ -65,28 +88,7 @@ const Trending = (): JSX.Element => {
         spacingY={{ base: 5, sm: 10 }}
         as="ul"
       >
-        {trendingLoading ? (
-          <LoadingVideos />
-        ) : (
-          <>
-            {trending.map((video, i: number) => (
-              <Box as="li" key={i.toString()}>
-                <Video
-                  url={video.url}
-                  title={video.title}
-                  thumbnail={video.thumbnail}
-                  uploaderName={video.uploaderName}
-                  uploaderUrl={video.uploaderUrl}
-                  uploaderAvatar={video.uploaderAvatar}
-                  uploadedDate={video.uploadedDate}
-                  duration={video.duration}
-                  views={video.views}
-                  uploaderVerified={video.uploaderVerified}
-                />
-              </Box>
-            ))}
-          </>
-        )}
+        {trending}
       </SimpleGrid>
     </Box>
   )

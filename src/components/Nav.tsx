@@ -71,6 +71,10 @@ export interface NavLinkProps {
 export const NavLink = (props: NavLinkProps) => {
   const { pathname } = useLocation()
 
+  const selectedBgColor = useColorModeValue('gray.100', 'neutral.900')
+  const selectedColor = useColorModeValue('red.600', 'white')
+  const normalColor = useColorModeValue('gray.600', 'neutral.400')
+
   return (
     <Box
       as={RouterLink}
@@ -79,17 +83,9 @@ export const NavLink = (props: NavLinkProps) => {
       px={2}
       py={2}
       rounded="md"
-      color={
-        pathname === props.href
-          ? useColorModeValue('red.600', 'white')
-          : useColorModeValue('gray.600', 'neutral.400')
-      }
-      bg={
-        pathname === props.href
-          ? useColorModeValue('gray.100', 'neutral.900')
-          : ''
-      }
-      _hover={{ bg: useColorModeValue('gray.50', 'neutral.900') }}
+      color={pathname === props.href ? selectedColor : normalColor}
+      bg={pathname === props.href ? selectedBgColor : ''}
+      _hover={{ bg: selectedBgColor }}
       fontSize="sm"
       fontWeight="medium"
       flexShrink={0}

@@ -3,8 +3,7 @@ export const timeFormat = (duration: any): string => {
     return ('000' + num).slice(size * -1)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const time: any = parseFloat(duration).toFixed(3),
+  const time = Number(parseFloat(duration).toFixed(3)),
     hours = Math.floor(time / 60 / 60),
     minutes = Math.floor(time / 60) % 60,
     seconds = Math.floor(time - minutes * 60)
