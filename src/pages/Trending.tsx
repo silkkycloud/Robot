@@ -49,7 +49,7 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
   return [data, loading]
 }
 
-const Trending = (): JSX.Element => {
+const Trending = () => {
   const [trendingResults, trendingLoading] = useFetchTrending('US')
 
   let trending
