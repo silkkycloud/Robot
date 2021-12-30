@@ -323,10 +323,6 @@ export const MobileNav = () => {
   )
 }
 
-export interface NavProps {
-  children?: React.ReactNode
-}
-
 export type NavContext = {
   isSidebarOpen: boolean
   onSidebarOpen: () => void
@@ -337,6 +333,10 @@ export type NavContext = {
 }
 
 export const NavContext = createContext<NavContext>({} as NavContext)
+
+export interface NavProps {
+  children?: React.ReactNode
+}
 
 const Nav = (props: NavProps) => {
   const {
