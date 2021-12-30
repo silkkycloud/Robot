@@ -20,6 +20,7 @@ import {
   useDisclosure,
   useColorModeValue,
   useColorMode,
+  Kbd,
 } from '@chakra-ui/react'
 import { AiFillFire, AiFillHeart, AiOutlineSearch } from 'react-icons/ai'
 import { MdDarkMode, MdLightMode } from 'react-icons/md'
