@@ -21,7 +21,7 @@ import {
   useColorModeValue,
   useColorMode,
 } from '@chakra-ui/react'
-import { AiFillFire, AiFillHeart } from 'react-icons/ai'
+import { AiFillFire, AiFillHeart, AiOutlineSearch } from 'react-icons/ai'
 import { IoIosSettings } from 'react-icons/io'
 import { HiMenuAlt2 } from 'react-icons/hi'
 import { FaRss } from 'react-icons/fa'
@@ -30,6 +30,7 @@ import { MdDarkMode, MdLightMode } from 'react-icons/md'
 import state from '../state'
 
 import { IconType } from 'react-icons'
+import Search from './Search'
 
 export type NavType = {
   name: string
@@ -119,6 +120,41 @@ export const NavLinks = () => (
   </>
 )
 
+export interface SearchButtonProps {
+  onOpen: () => void
+}
+
+export const SearchButton = (props: SearchButtonProps) => {
+  const normalColor = useColorModeValue('gray.600', 'neutral.400')
+
+  return (
+    <Box
+      as="button"
+      p={2}
+      rounded="md"
+      color={normalColor}
+      _hover={{ bg: useColorModeValue('gray.100', 'neutral.900') }}
+      fontSize="sm"
+      fontWeight="medium"
+      flexShrink={0}
+      onClick={() => props.onOpen()}
+    >
+      <Flex flexDir="row" alignItems="center">
+        <Icon
+          as={AiOutlineSearch}
+          flexShrink={0}
+          mr={3}
+          w={6}
+          h={6}
+          aria-hidden="true"
+          color={normalColor}
+        />
+        Search
+      </Flex>
+    </Box>
+  )
+}
+
 export const ThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
@@ -179,6 +215,7 @@ export const SidebarOpener = (props: SidebarOpenerProps) => (
 
 export interface NavBarProps {
   onOpen: () => void
+  onSearchOpen: () => void
 }
 
 export const NavBar = (props: NavBarProps) => (
@@ -197,7 +234,7 @@ export const NavBar = (props: NavBarProps) => (
     <Flex px={4} flex={1} justify="space-between">
       <Flex pos="relative" w="100%">
         <Flex pos="absolute" insetY={0} left={0} alignItems="center">
-          I understand
+          <SearchButton onOpen={props.onSearchOpen} />
         </Flex>
         <Flex pos="absolute" insetY={0} right={0} alignItems="center">
           <ThemeButton />
@@ -285,7 +322,7 @@ export const MobileNav = (props: MobileNavProps) => {
           </DrawerBody>
           <DrawerFooter>
             <Stack direction="column" as="nav" px={2} experimental_spaceY={1}>
-              fggf
+              I understand
             </Stack>
           </DrawerFooter>
         </DrawerContent>
@@ -300,6 +337,11 @@ export interface NavProps {
 
 const Nav = (props: NavProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const {
+    isOpen: isSearchOpen,
+    onOpen: onSearchOpen,
+    onClose: onSearchClose,
+  } = useDisclosure()
 
   return (
     <Box as="section">
@@ -309,10 +351,17 @@ const Nav = (props: NavProps) => {
       {/* Static sidebar for desktop */}
       <StaticNav />
 
+      {/* Search Bar */}
+      <Search
+        isOpen={isSearchOpen}
+        onOpen={onSearchOpen}
+        onClose={onSearchClose}
+      />
+
       {/* Primary page content */}
       <Flex pl={{ lg: 64 }} flexDir="column" flex={1}>
         {/* Navbar menu */}
-        <NavBar onOpen={onOpen} />
+        <NavBar onOpen={onOpen} onSearchOpen={onSearchOpen} />
         {props.children && <Box flex={1}>{props.children}</Box>}
       </Flex>
     </Box>

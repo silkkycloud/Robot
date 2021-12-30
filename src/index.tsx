@@ -66,6 +66,13 @@ const components = {
       },
     }),
   },
+  Modal: {
+    baseStyle: (props: Dict) => ({
+      dialog: {
+        bg: mode('white', 'neutral.800')(props),
+      },
+    }),
+  },
 }
 
 const theme = extendTheme({

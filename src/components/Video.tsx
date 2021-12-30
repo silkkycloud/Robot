@@ -10,14 +10,13 @@ import {
   Flex,
   Heading,
   Text,
-  Link,
   AspectRatio,
   Skeleton,
   SkeletonCircle,
   Avatar,
+  Tooltip,
   useBreakpointValue,
   useColorModeValue,
-  Tooltip,
 } from '@chakra-ui/react'
 import { HiCheckCircle } from 'react-icons/hi'
 
@@ -101,9 +100,9 @@ const Video = (props: VideoProps) => {
                     color={normalColor}
                     placement="top"
                   >
-                    <Link fontSize={{ base: 'xs', '2xl': 'sm' }}>
+                    <Text fontSize={{ base: 'xs', '2xl': 'sm' }}>
                       {props.uploaderName}
-                    </Link>
+                    </Text>
                   </Tooltip>
                   {props.uploaderVerified && (
                     <Box ml={1}>
