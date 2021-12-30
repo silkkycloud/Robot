@@ -47,7 +47,7 @@ const Video = (props: VideoProps) => (
             alt={props.title}
             htmlWidth={210}
             htmlHeight={118}
-            bg="gray"
+            bg={useColorModeValue('gray.300', 'neutral.800')}
           />
         </AspectRatio>
         <Box pos="relative">
@@ -69,7 +69,7 @@ const Video = (props: VideoProps) => (
               src={props.uploaderAvatar}
               loading="lazy"
               name={props.uploaderName}
-              bg="gray"
+              bg={useColorModeValue('gray.300', 'neutral.800')}
             />
           </Box>
         </RouterLink>
