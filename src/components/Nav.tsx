@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { useSnapshot } from 'valtio'
-import { Link as RouterLink, useLocation } from 'wouter'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 import {
   Box,
@@ -71,39 +71,39 @@ export interface NavLinkProps {
 }
 
 export const NavLink = (props: NavLinkProps) => {
-  const [location] = useLocation()
+  const { pathname } = useLocation()
 
   const selectedBgColor = useColorModeValue('gray.100', 'neutral.900')
   const selectedColor = useColorModeValue('red.600', 'white')
   const normalColor = useColorModeValue('gray.600', 'neutral.400')
 
   return (
-    <RouterLink href={props.href} key={props.name}>
-      <Box
-        as="button"
-        p={2}
-        rounded="md"
-        color={location === props.href ? selectedColor : normalColor}
-        bg={location === props.href ? selectedBgColor : ''}
-        _hover={{ bg: selectedBgColor }}
-        fontSize="sm"
-        fontWeight="medium"
-        flexShrink={0}
-      >
-        <Flex flexDir="row" alignItems="center">
-          <Icon
-            as={props.Icon}
-            flexShrink={0}
-            mr={3}
-            w={6}
-            h={6}
-            aria-hidden="true"
-            color={location === props.href ? 'red.600' : normalColor}
-          />
-          {props.name}
-        </Flex>
-      </Box>
-    </RouterLink>
+    <Box
+      as={RouterLink}
+      to={props.href}
+      key={props.name}
+      p={2}
+      rounded="md"
+      color={pathname === props.href ? selectedColor : normalColor}
+      bg={pathname === props.href ? selectedBgColor : ''}
+      _hover={{ bg: selectedBgColor }}
+      fontSize="sm"
+      fontWeight="medium"
+      flexShrink={0}
+    >
+      <Flex flexDir="row" alignItems="center">
+        <Icon
+          as={props.Icon}
+          flexShrink={0}
+          mr={3}
+          w={6}
+          h={6}
+          aria-hidden="true"
+          color={pathname === props.href ? 'red.600' : normalColor}
+        />
+        {props.name}
+      </Flex>
+    </Box>
   )
 }
 
@@ -258,7 +258,7 @@ export const StaticNav = () => {
         borderRight="1px"
         borderColor={useColorModeValue('gray.200', 'gray.900')}
       >
-        <RouterLink href="/">
+        <RouterLink to="/">
           <Flex px={4} alignItems="center">
             <Image
               mr={3}
@@ -293,7 +293,7 @@ export const MobileNav = () => {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>
-            <RouterLink href="/">
+            <RouterLink to="/">
               <Flex alignItems="center">
                 <Image
                   mr={3}

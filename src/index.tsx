@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router } from 'wouter'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
@@ -84,11 +84,11 @@ const theme = extendTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
+      <Router>
         <App />
-      </ChakraProvider>
-    </Router>
+      </Router>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
