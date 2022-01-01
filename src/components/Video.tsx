@@ -69,7 +69,7 @@ const Video = (props: VideoProps) => {
       <Flex flexDir="row" pos="relative">
         {props.uploaderAvatar && props.uploaderUrl && (
           <RouterLink to={props.uploaderUrl}>
-            <Box display="block" mr={2}>
+            <Box display="block" mr={3}>
               <Avatar
                 borderRadius="full"
                 size={avatarSize}
@@ -97,17 +97,14 @@ const Video = (props: VideoProps) => {
                   color={normalColor}
                   placement="top"
                 >
-                  <Text
-                    fontSize={{ base: 'xs', '2xl': 'sm' }}
-                    color={normalColor}
-                    display="flex"
-                    alignItems="center"
-                  >
-                    {props.uploaderName}
+                  <Flex alignItems="center" color={normalColor}>
+                    <Text fontSize={{ base: 'xs', '2xl': 'sm' }} noOfLines={1}>
+                      {props.uploaderName}
+                    </Text>
                     {props.uploaderVerified && (
                       <Icon as={HiCheckCircle} ml={1} width={3} height={3} />
                     )}
-                  </Text>
+                  </Flex>
                 </Tooltip>
               </RouterLink>
             )}
@@ -130,39 +127,37 @@ export const LoadingVideo = () => {
   const endColor = useColorModeValue('gray.200', 'neutral.700')
 
   return (
-    <Box display="block" overflow="hidden">
-      <Box experimental_spaceY={4}>
-        {/* Thumbnail */}
-        <AspectRatio ratio={16 / 9}>
-          <Skeleton
-            minWidth="100%"
-            minHeight="100%"
+    <Box display="block" overflow="hidden" experimental_spaceY={4}>
+      {/* Thumbnail */}
+      <AspectRatio ratio={16 / 9}>
+        <Skeleton
+          minWidth="100%"
+          minHeight="100%"
+          startColor={startColor}
+          endColor={endColor}
+        />
+      </AspectRatio>
+
+      {/* Details */}
+      <Flex flexDir="row" pos="relative">
+        <Box display="block" mr={2}>
+          <SkeletonCircle
+            size="36px"
             startColor={startColor}
             endColor={endColor}
           />
-        </AspectRatio>
-
-        {/* Details */}
-        <Flex flexDir="row" pos="relative">
-          <Box display="block" mr={2}>
-            <SkeletonCircle
-              size="36px"
-              startColor={startColor}
-              endColor={endColor}
-            />
-          </Box>
-          <Box experimental_spaceY={1} pr={2}>
-            <Skeleton startColor={startColor} endColor={endColor}>
-              <Heading as="h3" size="xs">
-                Lorem ipsum dolor sit amet
-              </Heading>
-            </Skeleton>
-            <Skeleton mt={1} startColor={startColor} endColor={endColor}>
-              <Text fontSize={{ base: 'xs', '2xl': 'sm' }}>Lorem ipsum</Text>
-            </Skeleton>
-          </Box>
-        </Flex>
-      </Box>
+        </Box>
+        <Box experimental_spaceY={1} pr={2}>
+          <Skeleton startColor={startColor} endColor={endColor}>
+            <Heading as="h3" size="xs">
+              Lorem ipsum dolor sit amet
+            </Heading>
+          </Skeleton>
+          <Skeleton mt={1} startColor={startColor} endColor={endColor}>
+            <Text fontSize={{ base: 'xs', '2xl': 'sm' }}>Lorem ipsum</Text>
+          </Skeleton>
+        </Box>
+      </Flex>
     </Box>
   )
 }
