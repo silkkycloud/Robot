@@ -52,8 +52,10 @@ export const useFetchChannel = (
             }
           })
           .catch((error) => {
-            if (isMounted) setLoading(false)
-            console.log(error)
+            if (isMounted) {
+              setLoading(false)
+              console.log(error)
+            }
           })
       }
     }
@@ -119,8 +121,10 @@ const ChannelPage = () => {
             }
           })
           .catch((error) => {
-            if (isMounted) setNextPageLoading(false)
-            console.log(error)
+            if (isMounted) {
+              setNextPageLoading(false)
+              console.log(error)
+            }
           })
       }
     }

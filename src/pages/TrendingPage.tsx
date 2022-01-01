@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
 import { Box, SimpleGrid } from '@chakra-ui/react'
-import { LoadingVideos } from '../components/Video'
-import Video from '../components/Video'
-
+import Video, { LoadingVideos } from '../components/Video'
 import { TrendingType } from '../types/api'
 
 import axios from 'axios'
@@ -37,8 +35,10 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
           }
         })
         .catch((error) => {
-          if (isMounted) setLoading(false)
-          console.log(error)
+          if (isMounted) {
+            setLoading(false)
+            console.log(error)
+          }
         })
     }
 
