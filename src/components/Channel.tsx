@@ -74,8 +74,8 @@ const Channel = (props: ChannelProps) => {
                   <Icon
                     ml={1}
                     as={HiCheckCircle}
-                    w={4}
-                    h={4}
+                    w={5}
+                    h={5}
                     color={normalColor}
                   />
                 )}

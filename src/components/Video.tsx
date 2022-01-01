@@ -113,10 +113,7 @@ const Video = (props: VideoProps) => {
             )}
             <RouterLink to={props.url}>
               <Flex flexDir="row" alignItems="center">
-                <Text
-                  fontSize={{ base: 'xs', '2xl': 'sm' }}
-                  color={normalColor}
-                >
+                <Text fontSize="xs" color={normalColor}>
                   {numberFormat(props.views)} views &#8226; {props.uploadedDate}
                 </Text>
               </Flex>
