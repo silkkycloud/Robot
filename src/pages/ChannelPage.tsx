@@ -1,8 +1,10 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
 import { useLocation, useParams } from 'react-router-dom'
 
 import axios from 'axios'
-import state from '../state'
+
+import { apiUrlState } from '../state'
 
 import { Box } from '@chakra-ui/react'
 import Channel, { LoadingChannel } from '../components/Channel'
@@ -14,6 +16,7 @@ export const useFetchChannel = (
   channelPrefix: string,
   channelId: string | undefined
 ): [ChannelType, Dispatch<SetStateAction<ChannelType>>, boolean] => {
+  const apiUrl = useRecoilValue(apiUrlState)
   const [data, setData] = useState<ChannelType>({
     id: '',
     name: '',
@@ -39,7 +42,7 @@ export const useFetchChannel = (
       ) {
         if (isMounted) setLoading(true)
         axios
-          .get(state.apiUrl + channelPrefix + channelId, {
+          .get(apiUrl + channelPrefix + channelId, {
             signal: ac.signal,
           })
           .then((res) => {
@@ -66,6 +69,7 @@ export const useFetchChannel = (
 }
 
 const ChannelPage = () => {
+  const apiUrl = useRecoilValue(apiUrlState)
   const { pathname } = useLocation()
   const basePath = pathname.split('/')[1]
   const { id } = useParams()
@@ -94,7 +98,7 @@ const ChannelPage = () => {
       ) {
         if (isMounted) setNextPageLoading(true)
         axios
-          .get(state.apiUrl + '/nextpage/channel/' + channelResults.id, {
+          .get(apiUrl + '/nextpage/channel/' + channelResults.id, {
             signal: ac.signal,
             params: {
               nextpage: channelResults.nextpage,

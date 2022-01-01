@@ -1,26 +1,21 @@
-import { proxy, subscribe } from 'valtio'
+import { atom } from 'recoil'
+import { recoilPersist } from 'recoil-persist'
 
-const getInitialState = () => {
-  try {
-    const state = JSON.parse(<string>localStorage.getItem('pipedState'))
-    if (state) return state
-  } catch (e) {
-    console.log(e)
-  }
+const { persistAtom } = recoilPersist()
 
-  return {
-    version: '0.1.0',
-    apiUrl: 'https://api.piped.silkky.cloud',
-    authenticated: false,
-    authToken: '',
-    theme: 'light',
-  }
-}
+/*
+Recoil
 
-export const state = proxy(getInitialState())
+Application settings store and defaults
+ */
 
-subscribe(state, () => {
-  localStorage.setItem('pipedState', JSON.stringify(state))
+export const versionState = atom({
+  key: 'versionState',
+  default: '0.0.1',
 })
 
-export default state
+export const apiUrlState = atom({
+  key: 'apiUrlState',
+  default: 'https://api.piped.silkky.cloud',
+  effects_UNSTABLE: [persistAtom],
+})

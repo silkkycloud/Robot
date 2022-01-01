@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 
 import { Box, SimpleGrid } from '@chakra-ui/react'
 import { LoadingVideos } from '../components/Video'
@@ -7,9 +8,11 @@ import Video from '../components/Video'
 import { TrendingType } from '../types/api'
 
 import axios from 'axios'
-import state from '../state'
+
+import { apiUrlState } from '../state'
 
 export const useFetchTrending = (region: string): [TrendingType, boolean] => {
+  const apiUrl = useRecoilValue(apiUrlState)
   const [data, setData] = useState<TrendingType>([])
   const [loading, setLoading] = useState(true)
 
@@ -21,7 +24,7 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
     const fetchTrending = () => {
       if (isMounted) setLoading(true)
       axios
-        .get(state.apiUrl + '/trending', {
+        .get(apiUrl + '/trending', {
           signal: ac.signal,
           params: {
             region: region,

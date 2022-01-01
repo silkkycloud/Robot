@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { RecoilRoot } from 'recoil'
 
 import Nav from './components/Nav'
 
@@ -22,7 +23,7 @@ export const ScrollToTop = () => {
 
 const App = () => {
   return (
-    <div className="App">
+    <RecoilRoot>
       <ScrollToTop />
       <Nav>
         <Routes>
@@ -36,7 +37,7 @@ const App = () => {
           <Route path="/user/:id/*" element={<ChannelPage />} />
         </Routes>
       </Nav>
-    </div>
+    </RecoilRoot>
   )
 }
 

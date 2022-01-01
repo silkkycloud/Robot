@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react'
-import { useSnapshot } from 'valtio'
+import { useRecoilValue } from 'recoil'
 import { Link as RouterLink } from 'react-router-dom'
 
 import {
@@ -27,7 +27,7 @@ import { AiOutlineSearch } from 'react-icons/ai'
 import { MdDarkMode, MdLightMode } from 'react-icons/md'
 import { HiMenuAlt2 } from 'react-icons/hi'
 
-import state from '../state'
+import { versionState } from '../state'
 
 import Search from './Search'
 
@@ -121,7 +121,7 @@ export const NavBar = () => {
 }
 
 export const StaticNav = () => {
-  const snap = useSnapshot(state)
+  const version = useRecoilValue(versionState)
 
   const borderColor = useColorModeValue('border.light', 'border.dark')
   const bgColor = useColorModeValue('main.light', 'main.dark')
@@ -153,7 +153,7 @@ export const StaticNav = () => {
               htmlWidth={50}
               htmlHeight={50}
             />
-            <Tag colorScheme="red">v{snap.version}</Tag>
+            <Tag colorScheme="red">v{version}</Tag>
           </Flex>
         </RouterLink>
         <Stack mt={5} px={2} pb={4} experimental_spaceY={1} as="nav">
@@ -165,7 +165,7 @@ export const StaticNav = () => {
 }
 
 export const MobileNav = () => {
-  const snap = useSnapshot(state)
+  const version = useRecoilValue(versionState)
   const nav = useContext(NavContext)
 
   return (
@@ -189,7 +189,7 @@ export const MobileNav = () => {
                   htmlHeight={50}
                   onClick={() => nav.onSidebarClose()}
                 />
-                <Tag colorScheme="red">v{snap.version}</Tag>
+                <Tag colorScheme="red">v{version}</Tag>
               </Flex>
             </RouterLink>
           </DrawerHeader>

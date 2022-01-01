@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import useKeyPress from '../hooks/useKeyPress'
 
 import {
@@ -19,11 +20,13 @@ import {
 import { NavContext } from './Nav'
 
 import axios from 'axios'
-import state from '../state'
+
+import { apiUrlState } from '../state'
 
 import { Suggestions } from '../types/api'
 
 export const useFetchSuggestions = (query: string): [Suggestions, boolean] => {
+  const apiUrl = useRecoilValue(apiUrlState)
   const [data, setData] = useState<Suggestions>([])
   const [loading, setLoading] = useState(false)
 
@@ -35,7 +38,7 @@ export const useFetchSuggestions = (query: string): [Suggestions, boolean] => {
     const fetchSuggestions = () => {
       if (isMounted) setLoading(true)
       axios
-        .get(state.apiUrl + '/suggestions', {
+        .get(apiUrl + '/suggestions', {
           signal: ac.signal,
           params: {
             query: query,
