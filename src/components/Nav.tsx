@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -31,9 +31,11 @@ import { versionState } from '../state'
 
 import Search from './Search'
 
-export const SidebarOpener = () => {
-  const nav = useContext(NavContext)
+interface SidebarOpener {
+  onSidebarOpen: () => void
+}
 
+export const SidebarOpener = (props: SidebarOpener) => {
   const borderColor = useColorModeValue('border.light', 'border.dark')
 
   return (
@@ -44,7 +46,7 @@ export const SidebarOpener = () => {
       py={4}
       borderRight="1px"
       borderColor={borderColor}
-      onClick={() => nav.onSidebarOpen()}
+      onClick={() => props.onSidebarOpen()}
     >
       <VisuallyHidden>Open sidebar</VisuallyHidden>
       <Icon
@@ -58,8 +60,12 @@ export const SidebarOpener = () => {
   )
 }
 
-export const NavBar = () => {
-  const nav = useContext(NavContext)
+interface NavBarProps {
+  onSidebarOpen: () => void
+  onSearchOpen: () => void
+}
+
+export const NavBar = (props: NavBarProps) => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   const normalColor = useColorModeValue('text.light', 'text.dark')
@@ -77,12 +83,12 @@ export const NavBar = () => {
       bg={bgColor}
       shadow="base"
     >
-      <SidebarOpener />
+      <SidebarOpener onSidebarOpen={props.onSidebarOpen} />
       <Flex px={4} flex={1} justify="space-between">
         <Flex pos="relative" w="100%">
           <Flex pos="absolute" insetY={0} left={0} alignItems="center">
             {/* Search toggle */}
-            <Button p={2} onClick={() => nav.onSearchOpen()}>
+            <Button p={2} onClick={() => props.onSearchOpen()}>
               <Flex flexDir="row" alignItems="center">
                 <Icon
                   as={AiOutlineSearch}
@@ -164,16 +170,20 @@ export const StaticNav = () => {
   )
 }
 
-export const MobileNav = () => {
+interface MobileNavProps {
+  isSidebarOpen: boolean
+  onSidebarClose: () => void
+}
+
+export const MobileNav = (props: MobileNavProps) => {
   const version = useRecoilValue(versionState)
-  const nav = useContext(NavContext)
 
   return (
     <>
       <Drawer
-        isOpen={nav.isSidebarOpen}
+        isOpen={props.isSidebarOpen}
         placement="left"
-        onClose={nav.onSidebarClose}
+        onClose={props.onSidebarClose}
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -187,7 +197,7 @@ export const MobileNav = () => {
                   alt="Piped"
                   htmlWidth={50}
                   htmlHeight={50}
-                  onClick={() => nav.onSidebarClose()}
+                  onClick={() => props.onSidebarClose()}
                 />
                 <Tag colorScheme="red">v{version}</Tag>
               </Flex>
@@ -195,7 +205,7 @@ export const MobileNav = () => {
           </DrawerHeader>
           <DrawerBody>
             <Stack direction="column" as="nav" px={2} experimental_spaceY={1}>
-              <NavLinks />
+              <NavLinks onClick={() => props.onSidebarClose()} />
             </Stack>
           </DrawerBody>
           <DrawerFooter>
@@ -208,17 +218,6 @@ export const MobileNav = () => {
     </>
   )
 }
-
-export type NavContext = {
-  isSidebarOpen: boolean
-  onSidebarOpen: () => void
-  onSidebarClose: () => void
-  isSearchOpen: boolean
-  onSearchOpen: () => void
-  onSearchClose: () => void
-}
-
-export const NavContext = createContext<NavContext>({} as NavContext)
 
 export interface NavProps {
   children?: React.ReactNode
@@ -237,32 +236,26 @@ const Nav = (props: NavProps) => {
   } = useDisclosure()
 
   return (
-    <NavContext.Provider
-      value={{
-        isSidebarOpen: isSidebarOpen,
-        onSidebarOpen: onSidebarOpen,
-        onSidebarClose: onSidebarClose,
-        isSearchOpen: isSearchOpen,
-        onSearchOpen: onSearchOpen,
-        onSearchClose: onSearchClose,
-      }}
-    >
+    <>
       {/* Dynamic sidebar for mobile */}
-      <MobileNav />
+      <MobileNav
+        isSidebarOpen={isSidebarOpen}
+        onSidebarClose={onSidebarClose}
+      />
 
       {/* Static sidebar for desktop */}
       <StaticNav />
 
       {/* Search Bar */}
-      <Search />
+      <Search isSearchOpen={isSearchOpen} onSearchClose={onSearchClose} />
 
       {/* Primary page content */}
       <Flex pl={{ lg: 64 }} flexDir="column" flex={1}>
         {/* Navbar menu */}
-        <NavBar />
+        <NavBar onSearchOpen={onSearchOpen} onSidebarOpen={onSidebarOpen} />
         {props.children && <Box flex={1}>{props.children}</Box>}
       </Flex>
-    </NavContext.Provider>
+    </>
   )
 }
 

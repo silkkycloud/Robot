@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import useKeyPress from '../hooks/useKeyPress'
 
@@ -16,8 +16,6 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
-
-import { NavContext } from './Nav'
 
 import axios from 'axios'
 
@@ -67,9 +65,12 @@ export const useFetchSuggestions = (query: string): [Suggestions, boolean] => {
   return [data, loading]
 }
 
-const Search = () => {
-  const nav = useContext(NavContext)
+interface SearchProps {
+  isSearchOpen: boolean
+  onSearchClose: () => void
+}
 
+const Search = (props: SearchProps) => {
   const cursorBgColor = useColorModeValue('gray.100', 'neutral.900')
 
   const [value, setValue] = useState('')
@@ -121,8 +122,8 @@ const Search = () => {
 
   return (
     <Modal
-      isOpen={nav.isSearchOpen}
-      onClose={nav.onSearchClose}
+      isOpen={props.isSearchOpen}
+      onClose={props.onSearchClose}
       size={useBreakpointValue({ base: 'full', sm: 'lg' })}
       scrollBehavior="inside"
     >

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Flex, Icon, useColorModeValue } from '@chakra-ui/react'
 import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Flex, Icon, useColorModeValue } from '@chakra-ui/react'
 import Button from './Button'
 import { AiFillFire, AiFillHeart } from 'react-icons/ai'
 import { FaRss } from 'react-icons/fa'
@@ -45,6 +45,7 @@ export interface NavLinkProps {
   name: string
   href: string
   Icon?: IconType
+  onClick?: React.MouseEventHandler<HTMLDivElement>
 }
 
 export const NavLink = (props: NavLinkProps) => {
@@ -65,6 +66,7 @@ export const NavLink = (props: NavLinkProps) => {
       p={2}
       color={pathname === props.href ? selectedColor : normalColor}
       bg={pathname === props.href ? selectedBgColor : ''}
+      onClick={props.onClick}
     >
       <Flex flexDir="row" alignItems="center">
         <Icon
@@ -82,7 +84,11 @@ export const NavLink = (props: NavLinkProps) => {
   )
 }
 
-const NavLinks = () => (
+interface NavLinksProps {
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}
+
+const NavLinks = (props: NavLinksProps) => (
   <>
     {navItems.map((item, i: number) => (
       <NavLink
@@ -90,6 +96,7 @@ const NavLinks = () => (
         name={item.name}
         href={item.href}
         Icon={item.Icon}
+        onClick={props.onClick}
       />
     ))}
   </>
