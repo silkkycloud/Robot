@@ -47,7 +47,7 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
       ac.abort()
       isMounted = false
     }
-  }, [region])
+  }, [region, apiUrl])
 
   return [data, loading]
 }

@@ -62,7 +62,7 @@ export const useFetchSuggestions = (query: string): [Suggestions, boolean] => {
       ac.abort()
       isMounted = false
     }
-  }, [query])
+  }, [query, apiUrl])
 
   return [data, loading]
 }

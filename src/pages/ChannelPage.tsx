@@ -63,7 +63,7 @@ export const useFetchChannel = (
       ac.abort()
       isMounted = false
     }
-  }, [channelPrefix, channelId])
+  }, [channelPrefix, channelId, apiUrl])
 
   return [data, setData, loading]
 }
@@ -136,6 +136,7 @@ const ChannelPage = () => {
     channelResults.id,
     channelResults.nextpage,
     setChannel,
+    apiUrl,
   ])
 
   let channel
