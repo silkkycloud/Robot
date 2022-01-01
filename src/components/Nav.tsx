@@ -63,7 +63,6 @@ export const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   const normalColor = useColorModeValue('text.light', 'text.dark')
-  const borderColor = useColorModeValue('border.light', 'border.dark')
   const bgColor = useColorModeValue('main.light', 'main.dark')
 
   return (
