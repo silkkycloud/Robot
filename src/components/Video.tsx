@@ -15,6 +15,7 @@ import {
   SkeletonCircle,
   Avatar,
   Tooltip,
+  Icon,
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -24,18 +25,19 @@ export interface VideoProps {
   url: string
   title: string
   thumbnail: string
-  uploaderName: string
-  uploaderUrl: string
-  uploaderAvatar: string
+  uploaderName?: string
+  uploaderUrl?: string
+  uploaderAvatar?: string
   uploadedDate: string
   duration: number
   views: number
-  uploaderVerified: boolean
+  uploaderVerified?: boolean
 }
 
 const Video = (props: VideoProps) => {
-  const normalBgColor = useColorModeValue('gray.300', 'neutral.800')
-  const normalColor = useColorModeValue('gray.600', 'neutral.400')
+  const bgColor = useColorModeValue('main.light', 'main.dark')
+  const normalColor = useColorModeValue('text.light', 'text.dark')
+  const avatarSize = useBreakpointValue({ base: 'md', sm: 'sm', lg: 'md' })
 
   return (
     <Box display="block" overflow="hidden" experimental_spaceY={4}>
@@ -51,7 +53,7 @@ const Video = (props: VideoProps) => {
             alt={props.title}
             htmlWidth={210}
             htmlHeight={118}
-            bg={normalBgColor}
+            bg={bgColor}
           />
         </AspectRatio>
         <Box pos="relative">
@@ -65,18 +67,20 @@ const Video = (props: VideoProps) => {
 
       {/* Details */}
       <Flex flexDir="row" pos="relative">
-        <RouterLink to={props.uploaderUrl}>
-          <Box display="block" mr={2}>
-            <Avatar
-              borderRadius="full"
-              size={useBreakpointValue({ base: 'md', sm: 'sm', lg: 'md' })}
-              src={props.uploaderAvatar}
-              loading="lazy"
-              name={props.uploaderName}
-              bg={normalBgColor}
-            />
-          </Box>
-        </RouterLink>
+        {props.uploaderAvatar && props.uploaderUrl && (
+          <RouterLink to={props.uploaderUrl}>
+            <Box display="block" mr={2}>
+              <Avatar
+                borderRadius="full"
+                size={avatarSize}
+                src={props.uploaderAvatar}
+                loading="lazy"
+                name={props.uploaderName}
+                bg={bgColor}
+              />
+            </Box>
+          </RouterLink>
+        )}
         <Box experimental_spaceY={1} pr={2}>
           <RouterLink to={props.url}>
             <Heading as="h3" size="xs" noOfLines={2}>
@@ -84,26 +88,29 @@ const Video = (props: VideoProps) => {
             </Heading>
           </RouterLink>
           <Box mt={1}>
-            <RouterLink to={props.uploaderUrl}>
-              <Flex flexDir="row" alignItems="center" color={normalColor}>
+            {props.uploaderName && props.uploaderUrl && (
+              <RouterLink to={props.uploaderUrl}>
                 <Tooltip
                   label={props.uploaderName}
                   aria-label={props.uploaderName}
-                  bg={normalBgColor}
+                  bg={bgColor}
                   color={normalColor}
                   placement="top"
                 >
-                  <Text fontSize={{ base: 'xs', '2xl': 'sm' }}>
+                  <Text
+                    fontSize={{ base: 'xs', '2xl': 'sm' }}
+                    color={normalColor}
+                    display="flex"
+                    alignItems="center"
+                  >
                     {props.uploaderName}
+                    {props.uploaderVerified && (
+                      <Icon as={HiCheckCircle} ml={1} width={3} height={3} />
+                    )}
                   </Text>
                 </Tooltip>
-                {props.uploaderVerified && (
-                  <Box ml={1}>
-                    <HiCheckCircle width={3} height={3} />
-                  </Box>
-                )}
-              </Flex>
-            </RouterLink>
+              </RouterLink>
+            )}
             <RouterLink to={props.url}>
               <Flex flexDir="row" alignItems="center">
                 <Text
@@ -149,10 +156,12 @@ export const LoadingVideo = () => {
           </Box>
           <Box experimental_spaceY={1} pr={2}>
             <Skeleton startColor={startColor} endColor={endColor}>
-              Lorem ipsum dolor sit amet
+              <Heading as="h3" size="xs">
+                Lorem ipsum dolor sit amet
+              </Heading>
             </Skeleton>
             <Skeleton mt={1} startColor={startColor} endColor={endColor}>
-              Lorem ipsum
+              <Text fontSize={{ base: 'xs', '2xl': 'sm' }}>Lorem ipsum</Text>
             </Skeleton>
           </Box>
         </Flex>

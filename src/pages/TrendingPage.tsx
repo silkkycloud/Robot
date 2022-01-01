@@ -49,7 +49,7 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
   return [data, loading]
 }
 
-const Trending = () => {
+const TrendingPage = () => {
   const [trendingResults, trendingLoading] = useFetchTrending('US')
 
   let trending
@@ -93,4 +93,4 @@ const Trending = () => {
   )
 }
 
-export default Trending
+export default TrendingPage

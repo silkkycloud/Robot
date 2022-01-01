@@ -4,11 +4,11 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 
 import Home from './pages/Home'
-import Trending from './pages/Trending'
+import TrendingPage from './pages/TrendingPage'
 import Settings from './pages/Settings'
 import Feed from './pages/Feed'
 import Subscriptions from './pages/Subscriptions'
-import Channel from './pages/Channel'
+import ChannelPage from './pages/ChannelPage'
 
 export const ScrollToTop = () => {
   const { pathname } = useLocation()
@@ -27,13 +27,13 @@ const App = () => {
       <Nav>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/trending" element={<Trending />} />
+          <Route path="/trending" element={<TrendingPage />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/subscriptions" element={<Subscriptions />} />
-          <Route path="/c/:id/*" element={<Channel />} />
-          <Route path="/channel/:id/*" element={<Channel />} />
-          <Route path="/user/:id/*" element={<Channel />} />
+          <Route path="/c/:id/*" element={<ChannelPage />} />
+          <Route path="/channel/:id/*" element={<ChannelPage />} />
+          <Route path="/user/:id/*" element={<ChannelPage />} />
         </Routes>
       </Nav>
     </div>

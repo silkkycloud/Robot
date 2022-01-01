@@ -42,7 +42,7 @@ export type TrendingType = {
   uploaderVerified: boolean
 }[]
 
-export type Channel = {
+export type ChannelType = {
   id: string
   name: string
   avatarUrl?: string
@@ -68,7 +68,7 @@ export type Channel = {
   message?: string
 }
 
-export type ChannelNextPage = {
+export type ChannelNextPageType = {
   nextpage: string
   relatedStreams?: {
     url: string

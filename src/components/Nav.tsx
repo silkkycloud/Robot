@@ -73,9 +73,12 @@ export interface NavLinkProps {
 export const NavLink = (props: NavLinkProps) => {
   const { pathname } = useLocation()
 
-  const selectedBgColor = useColorModeValue('gray.100', 'neutral.900')
+  const selectedBgColor = useColorModeValue(
+    'background.light',
+    'background.dark'
+  )
   const selectedColor = useColorModeValue('red.600', 'white')
-  const normalColor = useColorModeValue('gray.600', 'neutral.400')
+  const normalColor = useColorModeValue('text.light', 'text.dark')
 
   return (
     <Box
@@ -121,9 +124,10 @@ export const NavLinks = () => (
 )
 
 export const SearchButton = () => {
-  const normalColor = useColorModeValue('gray.600', 'neutral.400')
-
   const nav = useContext(NavContext)
+
+  const normalColor = useColorModeValue('text.light', 'text.dark')
+  const hoverColor = useColorModeValue('background.light', 'background.dark')
 
   return (
     <Box
@@ -131,7 +135,7 @@ export const SearchButton = () => {
       p={2}
       rounded="md"
       color={normalColor}
-      _hover={{ bg: useColorModeValue('gray.100', 'neutral.900') }}
+      _hover={{ bg: hoverColor }}
       fontSize="sm"
       fontWeight="medium"
       flexShrink={0}
@@ -156,7 +160,8 @@ export const SearchButton = () => {
 export const ThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
-  const normalColor = useColorModeValue('gray.600', 'neutral.400')
+  const normalColor = useColorModeValue('text.light', 'text.dark')
+  const hoverColor = useColorModeValue('background.light', 'background.dark')
 
   return (
     <Box
@@ -164,7 +169,7 @@ export const ThemeButton = () => {
       p={2}
       rounded="md"
       color={normalColor}
-      _hover={{ bg: useColorModeValue('gray.100', 'neutral.900') }}
+      _hover={{ bg: hoverColor }}
       fontSize="sm"
       fontWeight="medium"
       flexShrink={0}
@@ -189,6 +194,8 @@ export const ThemeButton = () => {
 export const SidebarOpener = () => {
   const nav = useContext(NavContext)
 
+  const borderColor = useColorModeValue('border.light', 'border.dark')
+
   return (
     <Box
       as="button"
@@ -196,7 +203,7 @@ export const SidebarOpener = () => {
       px={4}
       py={4}
       borderRight="1px"
-      borderColor={useColorModeValue('gray.200', 'gray.900')}
+      borderColor={borderColor}
       onClick={() => nav.onSidebarOpen()}
     >
       <VisuallyHidden>Open sidebar</VisuallyHidden>
@@ -211,34 +218,43 @@ export const SidebarOpener = () => {
   )
 }
 
-export const NavBar = () => (
-  <Flex
-    top={0}
-    zIndex={10}
-    flexShrink={0}
-    justifyContent={{ base: 'space-between', md: 'flex-end' }}
-    alignItems="center"
-    h={16}
-    shadow="base"
-    pos="sticky"
-    bg={useColorModeValue('white', 'neutral.800')}
-  >
-    <SidebarOpener />
-    <Flex px={4} flex={1} justify="space-between">
-      <Flex pos="relative" w="100%">
-        <Flex pos="absolute" insetY={0} left={0} alignItems="center">
-          <SearchButton />
-        </Flex>
-        <Flex pos="absolute" insetY={0} right={0} alignItems="center">
-          <ThemeButton />
+export const NavBar = () => {
+  const borderColor = useColorModeValue('border.light', 'border.dark')
+  const bgColor = useColorModeValue('main.light', 'main.dark')
+
+  return (
+    <Flex
+      top={0}
+      zIndex={10}
+      flexShrink={0}
+      justifyContent={{ base: 'space-between', md: 'flex-end' }}
+      alignItems="center"
+      h={16}
+      pos="sticky"
+      borderBottom="1px"
+      borderColor={borderColor}
+      bg={bgColor}
+    >
+      <SidebarOpener />
+      <Flex px={4} flex={1} justify="space-between">
+        <Flex pos="relative" w="100%">
+          <Flex pos="absolute" insetY={0} left={0} alignItems="center">
+            <SearchButton />
+          </Flex>
+          <Flex pos="absolute" insetY={0} right={0} alignItems="center">
+            <ThemeButton />
+          </Flex>
         </Flex>
       </Flex>
     </Flex>
-  </Flex>
-)
+  )
+}
 
 export const StaticNav = () => {
   const snap = useSnapshot(state)
+
+  const borderColor = useColorModeValue('border.light', 'border.dark')
+  const bgColor = useColorModeValue('main.light', 'main.dark')
 
   return (
     <Box
@@ -247,6 +263,7 @@ export const StaticNav = () => {
       width={{ lg: 64 }}
       insetY={{ lg: 0 }}
       pos={{ lg: 'fixed' }}
+      bg={bgColor}
     >
       <Flex
         pt={5}
@@ -254,9 +271,8 @@ export const StaticNav = () => {
         flexDir="column"
         h="100vh"
         flexGrow={1}
-        bg={useColorModeValue('white', 'neutral.800')}
         borderRight="1px"
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor={borderColor}
       >
         <RouterLink to="/">
           <Flex px={4} alignItems="center">

@@ -132,13 +132,12 @@ const Search = () => {
         <ModalBody pb={{ sm: 5 }}>
           <Input
             variant="filled"
-            placeholder="search"
             size="lg"
             focusBorderColor="red.600"
             value={value}
             onChange={(q) => setValue(q.target.value)}
           />
-          <Stack mt={2} spacing={1}>
+          <Stack mt={1} spacing={1}>
             {suggestions}
           </Stack>
         </ModalBody>
