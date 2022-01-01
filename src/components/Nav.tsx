@@ -75,9 +75,8 @@ export const NavBar = () => {
       alignItems="center"
       h={16}
       pos="sticky"
-      borderBottom="1px"
-      borderColor={borderColor}
       bg={bgColor}
+      shadow="base"
     >
       <SidebarOpener />
       <Flex px={4} flex={1} justify="space-between">

@@ -85,7 +85,7 @@ const mainColors = {
   },
   border: {
     light: colorSchemes.gray['200'],
-    dark: '#000',
+    dark: colorSchemes.neutral['700'],
   },
 }
 
