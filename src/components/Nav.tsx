@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { useSnapshot } from 'valtio'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 
 import {
   Box,
@@ -21,175 +21,15 @@ import {
   useColorModeValue,
   useColorMode,
 } from '@chakra-ui/react'
-import { AiFillFire, AiFillHeart, AiOutlineSearch } from 'react-icons/ai'
+import NavLinks from './NavLinks'
+import Button from './Button'
+import { AiOutlineSearch } from 'react-icons/ai'
 import { MdDarkMode, MdLightMode } from 'react-icons/md'
-import { IoIosSettings } from 'react-icons/io'
 import { HiMenuAlt2 } from 'react-icons/hi'
-import { FaRss } from 'react-icons/fa'
 
 import state from '../state'
 
-import { IconType } from 'react-icons'
 import Search from './Search'
-
-export type navItems = {
-  name: string
-  href: string
-  Icon?: IconType
-  auth?: boolean
-}[]
-
-export const navItems: navItems = [
-  {
-    name: 'Trending',
-    href: '/trending',
-    Icon: AiFillFire,
-  },
-  {
-    name: 'Feed',
-    href: '/feed',
-    Icon: FaRss,
-    auth: true,
-  },
-  {
-    name: 'Subscriptions',
-    href: '/subscriptions',
-    Icon: AiFillHeart,
-    auth: true,
-  },
-  {
-    name: 'Settings',
-    href: '/settings',
-    Icon: IoIosSettings,
-  },
-]
-
-export interface NavLinkProps {
-  name: string
-  href: string
-  Icon?: IconType
-}
-
-export const NavLink = (props: NavLinkProps) => {
-  const { pathname } = useLocation()
-
-  const selectedBgColor = useColorModeValue(
-    'background.light',
-    'background.dark'
-  )
-  const selectedColor = useColorModeValue('red.600', 'white')
-  const normalColor = useColorModeValue('text.light', 'text.dark')
-
-  return (
-    <Box
-      as={RouterLink}
-      to={props.href}
-      key={props.name}
-      p={2}
-      rounded="md"
-      color={pathname === props.href ? selectedColor : normalColor}
-      bg={pathname === props.href ? selectedBgColor : ''}
-      _hover={{ bg: selectedBgColor }}
-      fontSize="sm"
-      fontWeight="medium"
-      flexShrink={0}
-    >
-      <Flex flexDir="row" alignItems="center">
-        <Icon
-          as={props.Icon}
-          flexShrink={0}
-          mr={3}
-          w={6}
-          h={6}
-          aria-hidden="true"
-          color={pathname === props.href ? 'red.600' : normalColor}
-        />
-        {props.name}
-      </Flex>
-    </Box>
-  )
-}
-
-export const NavLinks = () => (
-  <>
-    {navItems.map((item, i: number) => (
-      <NavLink
-        key={i.toString()}
-        name={item.name}
-        href={item.href}
-        Icon={item.Icon}
-      />
-    ))}
-  </>
-)
-
-export const SearchButton = () => {
-  const nav = useContext(NavContext)
-
-  const normalColor = useColorModeValue('text.light', 'text.dark')
-  const hoverColor = useColorModeValue('background.light', 'background.dark')
-
-  return (
-    <Box
-      as="button"
-      p={2}
-      rounded="md"
-      color={normalColor}
-      _hover={{ bg: hoverColor }}
-      fontSize="sm"
-      fontWeight="medium"
-      flexShrink={0}
-      onClick={() => nav.onSearchOpen()}
-    >
-      <Flex flexDir="row" alignItems="center">
-        <Icon
-          as={AiOutlineSearch}
-          flexShrink={0}
-          mr={3}
-          w={6}
-          h={6}
-          aria-hidden="true"
-          color={normalColor}
-        />
-        Search
-      </Flex>
-    </Box>
-  )
-}
-
-export const ThemeButton = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
-
-  const normalColor = useColorModeValue('text.light', 'text.dark')
-  const hoverColor = useColorModeValue('background.light', 'background.dark')
-
-  return (
-    <Box
-      as="button"
-      p={2}
-      rounded="md"
-      color={normalColor}
-      _hover={{ bg: hoverColor }}
-      fontSize="sm"
-      fontWeight="medium"
-      flexShrink={0}
-      onClick={() => toggleColorMode()}
-    >
-      <Flex flexDir="row" alignItems="center">
-        <Icon
-          as={colorMode === 'light' ? MdDarkMode : MdLightMode}
-          flexShrink={0}
-          mr={3}
-          w={6}
-          h={6}
-          aria-hidden="true"
-          color={normalColor}
-        />
-        Theme
-      </Flex>
-    </Box>
-  )
-}
 
 export const SidebarOpener = () => {
   const nav = useContext(NavContext)
@@ -219,6 +59,10 @@ export const SidebarOpener = () => {
 }
 
 export const NavBar = () => {
+  const nav = useContext(NavContext)
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  const normalColor = useColorModeValue('text.light', 'text.dark')
   const borderColor = useColorModeValue('border.light', 'border.dark')
   const bgColor = useColorModeValue('main.light', 'main.dark')
 
@@ -239,10 +83,38 @@ export const NavBar = () => {
       <Flex px={4} flex={1} justify="space-between">
         <Flex pos="relative" w="100%">
           <Flex pos="absolute" insetY={0} left={0} alignItems="center">
-            <SearchButton />
+            {/* Search toggle */}
+            <Button p={2} onClick={() => nav.onSearchOpen()}>
+              <Flex flexDir="row" alignItems="center">
+                <Icon
+                  as={AiOutlineSearch}
+                  flexShrink={0}
+                  mr={3}
+                  w={6}
+                  h={6}
+                  aria-hidden="true"
+                  color={normalColor}
+                />
+                Search
+              </Flex>
+            </Button>
           </Flex>
           <Flex pos="absolute" insetY={0} right={0} alignItems="center">
-            <ThemeButton />
+            {/* Theme toggle */}
+            <Button p={2} onClick={() => toggleColorMode()}>
+              <Flex flexDir="row" alignItems="center">
+                <Icon
+                  as={colorMode === 'light' ? MdDarkMode : MdLightMode}
+                  flexShrink={0}
+                  mr={3}
+                  w={6}
+                  h={6}
+                  aria-hidden="true"
+                  color={normalColor}
+                />
+                Theme
+              </Flex>
+            </Button>
           </Flex>
         </Flex>
       </Flex>

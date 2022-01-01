@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { ChannelType } from '../types/api'
 import {
   Box,
   Container,
@@ -9,12 +8,12 @@ import {
   Heading,
   Text,
   Icon,
-  useColorModeValue,
   SkeletonCircle,
   Skeleton,
   SimpleGrid,
   Center,
   Spinner,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { HiCheckCircle } from 'react-icons/hi'
 
@@ -22,6 +21,8 @@ import { numberFormat } from '../functions/format'
 import urlify from '../functions/urlify'
 import { purifyHTML } from '../functions/purify'
 import Video, { LoadingVideos } from './Video'
+
+import { ChannelType } from '../types/api'
 
 export interface ChannelProps extends ChannelType {
   nextPageLoading: boolean
