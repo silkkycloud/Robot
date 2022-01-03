@@ -14,8 +14,9 @@ import {
   Skeleton,
   SkeletonCircle,
   Avatar,
-  Tooltip,
   Icon,
+  LinkBox,
+  LinkOverlay,
   useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -40,9 +41,9 @@ const Video = (props: VideoProps) => {
   const avatarSize = useBreakpointValue({ base: 'md', sm: 'sm', lg: 'md' })
 
   return (
-    <Box display="block" overflow="hidden" experimental_spaceY={4}>
+    <LinkBox display="block" overflow="hidden" experimental_spaceY={4}>
       {/* Thumbnail */}
-      <RouterLink to={props.url}>
+      <LinkOverlay as={RouterLink} to={props.url}>
         <AspectRatio ratio={16 / 9}>
           <Image
             fit="fill"
@@ -63,7 +64,7 @@ const Video = (props: VideoProps) => {
             </Badge>
           </Box>
         </Box>
-      </RouterLink>
+      </LinkOverlay>
 
       {/* Details */}
       <Flex flexDir="row" pos="relative">
@@ -82,43 +83,33 @@ const Video = (props: VideoProps) => {
           </RouterLink>
         )}
         <Box experimental_spaceY={1} pr={2}>
-          <RouterLink to={props.url}>
+          <LinkOverlay as={RouterLink} to={props.url}>
             <Heading as="h3" size="xs" noOfLines={2}>
               {props.title}
             </Heading>
-          </RouterLink>
+          </LinkOverlay>
           <Box mt={1}>
             {props.uploaderName && props.uploaderUrl && (
               <RouterLink to={props.uploaderUrl}>
-                <Tooltip
-                  label={props.uploaderName}
-                  aria-label={props.uploaderName}
-                  bg={bgColor}
-                  color={normalColor}
-                  placement="top"
-                >
-                  <Flex alignItems="center" color={normalColor}>
-                    <Text fontSize={{ base: 'xs', '2xl': 'sm' }} noOfLines={1}>
-                      {props.uploaderName}
-                    </Text>
-                    {props.uploaderVerified && (
-                      <Icon as={HiCheckCircle} ml={1} width={3} height={3} />
-                    )}
-                  </Flex>
-                </Tooltip>
+                <Flex alignItems="center" color={normalColor}>
+                  <Text fontSize={{ base: 'xs', '2xl': 'sm' }} noOfLines={1}>
+                    {props.uploaderName}
+                  </Text>
+                  {props.uploaderVerified && (
+                    <Icon as={HiCheckCircle} ml={1} width={3} height={3} />
+                  )}
+                </Flex>
               </RouterLink>
             )}
-            <RouterLink to={props.url}>
-              <Flex flexDir="row" alignItems="center">
-                <Text fontSize="xs" color={normalColor}>
-                  {numberFormat(props.views)} views &#8226; {props.uploadedDate}
-                </Text>
-              </Flex>
-            </RouterLink>
+            <Flex flexDir="row" alignItems="center">
+              <Text fontSize="xs" color={normalColor}>
+                {numberFormat(props.views)} views &#8226; {props.uploadedDate}
+              </Text>
+            </Flex>
           </Box>
         </Box>
       </Flex>
-    </Box>
+    </LinkBox>
   )
 }
 

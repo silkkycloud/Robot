@@ -9,6 +9,7 @@ import TrendingPage from './pages/TrendingPage'
 import Settings from './pages/Settings'
 import Feed from './pages/Feed'
 import Subscriptions from './pages/Subscriptions'
+import ResultsPage from './pages/ResultsPage'
 import ChannelPage from './pages/ChannelPage'
 
 export const ScrollToTop = () => {
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/results" element={<ResultsPage />} />
           <Route path="/c/:id/*" element={<ChannelPage />} />
           <Route path="/channel/:id/*" element={<ChannelPage />} />
           <Route path="/user/:id/*" element={<ChannelPage />} />
