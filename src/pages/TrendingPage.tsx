@@ -13,7 +13,7 @@ import { apiUrlState } from '../state'
 export const useFetchTrending = (region: string): [TrendingType, boolean] => {
   const apiUrl = useRecoilValue(apiUrlState)
   const [data, setData] = useState<TrendingType>([] as TrendingType)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -62,7 +62,7 @@ const TrendingPage = () => {
     trending = <LoadingVideos />
   } else {
     trending = trendingResults.map((video, i: number) => (
-      <LazyLoad key={i} placeholder={<LoadingVideo />}>
+      <LazyLoad key={i.toString()} placeholder={<LoadingVideo />} offset={100}>
         <Video
           url={video.url}
           title={video.title}
@@ -80,12 +80,7 @@ const TrendingPage = () => {
   }
 
   return (
-    <Box
-      py={6}
-      px={{ base: 4, sm: 6, lg: 8 }}
-      mx="auto"
-      className="py-6 mx-auto px-4 sm:px-6 lg:px-8"
-    >
+    <Box py={6} px={{ base: 4, sm: 6, lg: 8 }} mx="auto">
       <SimpleGrid
         columns={{ base: 1, sm: 2, md: 3, xl: 4, '2xl': 6 }}
         spacingX={{ sm: 4, md: 3 }}

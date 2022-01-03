@@ -111,7 +111,11 @@ const Channel = (props: ChannelProps) => {
             spacingY={{ base: 5, sm: 10 }}
           >
             {props.relatedStreams.map((video, i: number) => (
-              <LazyLoad key={i.toString()} placeholder={<LoadingVideo />}>
+              <LazyLoad
+                key={i.toString()}
+                placeholder={<LoadingVideo />}
+                offset={100}
+              >
                 <Video
                   url={video.url}
                   title={video.title}

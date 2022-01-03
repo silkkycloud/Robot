@@ -67,21 +67,3 @@ export type ChannelType = {
   error?: string
   message?: string
 }
-
-export type ChannelNextPageType = {
-  nextpage: string
-  relatedStreams?: {
-    url: string
-    title: string
-    thumbnail: string
-    uploaderName: string
-    uploaderUrl: string
-    uploaderAvatar: null
-    uploadedDate: string
-    duration: number
-    views: number
-    uploaderVerified: boolean
-  }[]
-  error?: string
-  message?: string
-}
