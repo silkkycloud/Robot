@@ -53,15 +53,13 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
   return [data, loading]
 }
 
-const TrendingPage = () => {
-  const [trendingResults, trendingLoading] = useFetchTrending('US')
+interface TrendingVideosProps {
+  trendingData: TrendingType
+}
 
-  let trending
-
-  if (trendingLoading) {
-    trending = <LoadingVideos />
-  } else {
-    trending = trendingResults.map((video, i: number) => (
+const TrendingVideos = React.memo((props: TrendingVideosProps) => (
+  <>
+    {props.trendingData.map((video, i: number) => (
       <LazyLoad key={i.toString()} placeholder={<LoadingVideo />} offset={100}>
         <Video
           url={video.url}
@@ -76,8 +74,13 @@ const TrendingPage = () => {
           uploaderVerified={video.uploaderVerified}
         />
       </LazyLoad>
-    ))
-  }
+    ))}
+  </>
+))
+TrendingVideos.displayName = 'TrendingVideos'
+
+const TrendingPage = () => {
+  const [trendingResults, trendingLoading] = useFetchTrending('US')
 
   return (
     <Box py={6} px={{ base: 4, sm: 6, lg: 8 }} mx="auto">
@@ -86,7 +89,11 @@ const TrendingPage = () => {
         spacingX={{ sm: 4, md: 3 }}
         spacingY={{ base: 5, sm: 10 }}
       >
-        {trending}
+        {trendingLoading ? (
+          <LoadingVideos />
+        ) : (
+          <TrendingVideos trendingData={trendingResults} />
+        )}
       </SimpleGrid>
     </Box>
   )

@@ -4,6 +4,19 @@ Piped API response types
 
 export type Suggestions = string[]
 
+export type StreamType = {
+  url: string
+  title: string
+  thumbnail: string
+  uploaderName: string
+  uploaderUrl: string
+  uploaderAvatar: string
+  uploadedDate: string
+  duration: number
+  views: number
+  uploaderVerified: boolean
+}[]
+
 export type Search = {
   items?: {
     url: string
@@ -57,7 +70,7 @@ export type ChannelType = {
     thumbnail: string
     uploaderName: string
     uploaderUrl: string
-    uploaderAvatar: null
+    uploaderAvatar: string
     uploadedDate: string
     duration: number
     views: number

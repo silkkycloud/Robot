@@ -23,7 +23,29 @@ import urlify from '../functions/urlify'
 import { purifyHTML } from '../functions/purify'
 import Video, { LoadingVideo, LoadingVideos } from './Video'
 
-import { ChannelType } from '../types/api'
+import { StreamType, ChannelType } from '../types/api'
+
+interface ChannelVideosProps {
+  streamsData: StreamType
+}
+
+export const ChannelVideos = React.memo((props: ChannelVideosProps) => (
+  <>
+    {props.streamsData.map((video, i: number) => (
+      <LazyLoad key={i.toString()} placeholder={<LoadingVideo />} offset={100}>
+        <Video
+          url={video.url}
+          title={video.title}
+          thumbnail={video.thumbnail}
+          uploadedDate={video.uploadedDate}
+          duration={video.duration}
+          views={video.views}
+        />
+      </LazyLoad>
+    ))}
+  </>
+))
+ChannelVideos.displayName = 'ChannelVideos'
 
 interface ChannelProps extends ChannelType {
   nextPageLoading: boolean
@@ -110,22 +132,7 @@ const Channel = (props: ChannelProps) => {
             spacingX={{ sm: 4, md: 3 }}
             spacingY={{ base: 5, sm: 10 }}
           >
-            {props.relatedStreams.map((video, i: number) => (
-              <LazyLoad
-                key={i.toString()}
-                placeholder={<LoadingVideo />}
-                offset={100}
-              >
-                <Video
-                  url={video.url}
-                  title={video.title}
-                  thumbnail={video.thumbnail}
-                  uploadedDate={video.uploadedDate}
-                  duration={video.duration}
-                  views={video.views}
-                />
-              </LazyLoad>
-            ))}
+            <ChannelVideos streamsData={props.relatedStreams} />
           </SimpleGrid>
           {props.nextPageLoading && (
             <Center my={8}>

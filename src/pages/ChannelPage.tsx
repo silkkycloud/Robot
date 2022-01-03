@@ -18,7 +18,7 @@ export const useFetchChannel = (
 ): [ChannelType, Dispatch<SetStateAction<ChannelType>>, boolean] => {
   const apiUrl = useRecoilValue(apiUrlState)
   const [data, setData] = useState<ChannelType>({} as ChannelType)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     let isMounted = true
