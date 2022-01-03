@@ -17,16 +17,7 @@ export const useFetchChannel = (
   channelId: string | undefined
 ): [ChannelType, Dispatch<SetStateAction<ChannelType>>, boolean] => {
   const apiUrl = useRecoilValue(apiUrlState)
-  const [data, setData] = useState<ChannelType>({
-    id: '',
-    name: '',
-    avatarUrl: '',
-    bannerUrl: '',
-    description: '',
-    nextpage: '',
-    subscriberCount: 0,
-    verified: false,
-  })
+  const [data, setData] = useState<ChannelType>({} as ChannelType)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

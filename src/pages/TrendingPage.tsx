@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
+import LazyLoad from 'react-lazyload'
 import { Box, SimpleGrid } from '@chakra-ui/react'
-import Video, { LoadingVideos } from '../components/Video'
+import Video, { LoadingVideo, LoadingVideos } from '../components/Video'
 import { TrendingType } from '../types/api'
 
 import axios from 'axios'
@@ -11,7 +12,7 @@ import { apiUrlState } from '../state'
 
 export const useFetchTrending = (region: string): [TrendingType, boolean] => {
   const apiUrl = useRecoilValue(apiUrlState)
-  const [data, setData] = useState<TrendingType>([])
+  const [data, setData] = useState<TrendingType>([] as TrendingType)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const TrendingPage = () => {
     trending = <LoadingVideos />
   } else {
     trending = trendingResults.map((video, i: number) => (
-      <Box key={i.toString()}>
+      <LazyLoad key={i} placeholder={<LoadingVideo />}>
         <Video
           url={video.url}
           title={video.title}
@@ -74,7 +75,7 @@ const TrendingPage = () => {
           views={video.views}
           uploaderVerified={video.uploaderVerified}
         />
-      </Box>
+      </LazyLoad>
     ))
   }
 

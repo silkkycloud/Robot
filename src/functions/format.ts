@@ -3,7 +3,7 @@ export const timeFormat = (duration: number): string => {
     return ('000' + num).slice(size * -1)
   }
 
-  const time = Number(parseFloat(String(duration)).toFixed(3)),
+  const time = Number(duration.toFixed(3)),
     hours = Math.floor(time / 60 / 60),
     minutes = Math.floor(time / 60) % 60,
     seconds = Math.floor(time - minutes * 60)

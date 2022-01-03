@@ -71,7 +71,7 @@ interface SearchProps {
 }
 
 const Search = (props: SearchProps) => {
-  const cursorBgColor = useColorModeValue('gray.100', 'neutral.900')
+  const cursorBgColor = useColorModeValue('background.light', 'background.dark')
 
   const [value, setValue] = useState('')
   const [cursor, setCursor] = useState<number>()

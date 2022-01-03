@@ -9,7 +9,7 @@ import { IoIosSettings } from 'react-icons/io'
 
 import { IconType } from 'react-icons'
 
-export type navItems = {
+type navItems = {
   name: string
   href: string
   Icon?: IconType
@@ -41,7 +41,7 @@ export const navItems: navItems = [
   },
 ]
 
-export interface NavLinkProps {
+interface NavLinkProps {
   name: string
   href: string
   Icon?: IconType

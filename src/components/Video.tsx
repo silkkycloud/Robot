@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react'
 import { HiCheckCircle } from 'react-icons/hi'
 
-export interface VideoProps {
+interface VideoProps {
   url: string
   title: string
   thumbnail: string

@@ -15,16 +15,17 @@ import {
   Spinner,
   useColorModeValue,
 } from '@chakra-ui/react'
+import LazyLoad from 'react-lazyload'
 import { HiCheckCircle } from 'react-icons/hi'
 
 import { numberFormat } from '../functions/format'
 import urlify from '../functions/urlify'
 import { purifyHTML } from '../functions/purify'
-import Video, { LoadingVideos } from './Video'
+import Video, { LoadingVideo, LoadingVideos } from './Video'
 
 import { ChannelType } from '../types/api'
 
-export interface ChannelProps extends ChannelType {
+interface ChannelProps extends ChannelType {
   nextPageLoading: boolean
 }
 
@@ -110,7 +111,7 @@ const Channel = (props: ChannelProps) => {
             spacingY={{ base: 5, sm: 10 }}
           >
             {props.relatedStreams.map((video, i: number) => (
-              <Box key={i.toString()}>
+              <LazyLoad key={i.toString()} placeholder={<LoadingVideo />}>
                 <Video
                   url={video.url}
                   title={video.title}
@@ -119,7 +120,7 @@ const Channel = (props: ChannelProps) => {
                   duration={video.duration}
                   views={video.views}
                 />
-              </Box>
+              </LazyLoad>
             ))}
           </SimpleGrid>
           {props.nextPageLoading && (
