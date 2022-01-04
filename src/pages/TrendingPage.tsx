@@ -60,7 +60,12 @@ interface TrendingVideosProps {
 const TrendingVideos = React.memo((props: TrendingVideosProps) => (
   <>
     {props.trendingData.map((video, i: number) => (
-      <LazyLoad key={i.toString()} placeholder={<LoadingVideo />} offset={100}>
+      <LazyLoad
+        key={i.toString()}
+        placeholder={<LoadingVideo />}
+        offset={500}
+        unmountIfInvisible
+      >
         <Video
           url={video.url}
           title={video.title}

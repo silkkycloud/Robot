@@ -131,23 +131,16 @@ export const LoadingVideo = () => {
 
       {/* Details */}
       <Flex flexDir="row" pos="relative">
-        <Box display="block" mr={2}>
-          <SkeletonCircle
-            size="36px"
-            startColor={startColor}
-            endColor={endColor}
-          />
-        </Box>
-        <Box experimental_spaceY={1} pr={2}>
-          <Skeleton startColor={startColor} endColor={endColor}>
-            <Heading as="h3" size="xs">
-              Lorem ipsum dolor sit amet
-            </Heading>
-          </Skeleton>
-          <Skeleton mt={1} startColor={startColor} endColor={endColor}>
-            <Text fontSize={{ base: 'xs', '2xl': 'sm' }}>Lorem ipsum</Text>
-          </Skeleton>
-        </Box>
+        <SkeletonCircle
+          display="block"
+          mr={2}
+          size="36px"
+          startColor={startColor}
+          endColor={endColor}
+        />
+        <Skeleton pr={2} startColor={startColor} endColor={endColor}>
+          Lorem ipsum dolor sit amet
+        </Skeleton>
       </Flex>
     </Box>
   )

@@ -32,7 +32,12 @@ interface ChannelVideosProps {
 export const ChannelVideos = React.memo((props: ChannelVideosProps) => (
   <>
     {props.streamsData.map((video, i: number) => (
-      <LazyLoad key={i.toString()} placeholder={<LoadingVideo />} offset={100}>
+      <LazyLoad
+        key={i.toString()}
+        placeholder={<LoadingVideo />}
+        offset={500}
+        unmountIfInvisible
+      >
         <Video
           url={video.url}
           title={video.title}
