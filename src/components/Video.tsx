@@ -38,7 +38,6 @@ interface VideoProps {
 const Video = (props: VideoProps) => {
   const bgColor = useColorModeValue('main.light', 'main.dark')
   const normalColor = useColorModeValue('text.light', 'text.dark')
-  const avatarSize = useBreakpointValue({ base: 'md', sm: 'sm', lg: 'md' })
 
   return (
     <LinkBox display="block" overflow="hidden" experimental_spaceY={4}>
@@ -73,7 +72,7 @@ const Video = (props: VideoProps) => {
             <Box display="block" mr={3}>
               <Avatar
                 borderRadius="full"
-                size={avatarSize}
+                size="md"
                 src={props.uploaderAvatar}
                 loading="lazy"
                 name={props.uploaderName}
@@ -131,13 +130,13 @@ export const LoadingVideo = () => {
 
       {/* Details */}
       <Flex flexDir="row" pos="relative">
-        <SkeletonCircle
-          display="block"
-          mr={2}
-          size="36px"
-          startColor={startColor}
-          endColor={endColor}
-        />
+        <Box display="block" mr={2}>
+          <SkeletonCircle
+            size="48px"
+            startColor={startColor}
+            endColor={endColor}
+          />
+        </Box>
         <Skeleton pr={2} startColor={startColor} endColor={endColor}>
           Lorem ipsum dolor sit amet
         </Skeleton>
