@@ -17,7 +17,6 @@ import {
   Icon,
   LinkBox,
   LinkOverlay,
-  useBreakpointValue,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { HiCheckCircle } from 'react-icons/hi'
