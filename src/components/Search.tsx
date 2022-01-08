@@ -21,11 +21,13 @@ import axios from 'axios'
 
 import { apiUrlState } from '../state'
 
-import { Suggestions } from '../types/api'
+import { SuggestionsType } from '../types/api'
 
-export const useFetchSuggestions = (query: string): [Suggestions, boolean] => {
+export const useFetchSuggestions = (
+  query: string
+): [SuggestionsType, boolean] => {
   const apiUrl = useRecoilValue(apiUrlState)
-  const [data, setData] = useState<Suggestions>([])
+  const [data, setData] = useState<SuggestionsType>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

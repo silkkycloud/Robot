@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-location'
 
 import {
   Box,

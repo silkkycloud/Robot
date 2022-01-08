@@ -15,13 +15,12 @@ import {
   Spinner,
   useColorModeValue,
 } from '@chakra-ui/react'
-import LazyLoad from 'react-lazyload'
 import { HiCheckCircle } from 'react-icons/hi'
 
 import { numberFormat } from '../functions/format'
 import urlify from '../functions/urlify'
 import { purifyHTML } from '../functions/purify'
-import Video, { LoadingVideo, LoadingVideos } from './Video'
+import Video, { LoadingVideos } from './Video'
 
 import { StreamType, ChannelType } from '../types/api'
 
@@ -32,12 +31,7 @@ interface ChannelVideosProps {
 export const ChannelVideos = React.memo((props: ChannelVideosProps) => (
   <>
     {props.streamsData.map((video, i: number) => (
-      <LazyLoad
-        key={i.toString()}
-        placeholder={<LoadingVideo />}
-        offset={500}
-        unmountIfInvisible
-      >
+      <Box key={i.toString()}>
         <Video
           url={video.url}
           title={video.title}
@@ -46,7 +40,7 @@ export const ChannelVideos = React.memo((props: ChannelVideosProps) => (
           duration={video.duration}
           views={video.views}
         />
-      </LazyLoad>
+      </Box>
     ))}
   </>
 ))

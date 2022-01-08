@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { ReactLocation, Router, Outlet, useRouter, Route } from 'react-location'
+import { ReactLocationDevtools } from 'react-location-devtools'
 import { RecoilRoot } from 'recoil'
 
 import Nav from './components/Nav'
@@ -13,33 +14,69 @@ import ResultsPage from './pages/ResultsPage'
 import ChannelPage from './pages/ChannelPage'
 
 export const ScrollToTop = () => {
-  const { pathname } = useLocation()
+  const router = useRouter()
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [router.state.location.pathname])
 
   return null
 }
 
+const routes: Route[] = [
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/trending',
+    element: <TrendingPage />,
+  },
+  {
+    path: '/settings',
+    element: <Settings />,
+  },
+  {
+    path: '/feed',
+    element: <Feed />,
+  },
+  {
+    path: '/subscriptions',
+    element: <Subscriptions />,
+  },
+  {
+    path: '/results',
+    element: <ResultsPage />,
+  },
+  {
+    path: '/c/:id',
+    element: <ChannelPage />,
+  },
+  {
+    path: '/channel/:id',
+    element: <ChannelPage />,
+  },
+  {
+    path: '/user/:id',
+    element: <ChannelPage />,
+  },
+]
+
+const location = new ReactLocation()
+
 const App = () => {
   return (
-    <RecoilRoot>
-      <ScrollToTop />
-      <Nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/trending" element={<TrendingPage />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/subscriptions" element={<Subscriptions />} />
-          <Route path="/results" element={<ResultsPage />} />
-          <Route path="/c/:id/*" element={<ChannelPage />} />
-          <Route path="/channel/:id/*" element={<ChannelPage />} />
-          <Route path="/user/:id/*" element={<ChannelPage />} />
-        </Routes>
-      </Nav>
-    </RecoilRoot>
+    <div id="app">
+      <RecoilRoot>
+        <Router location={location} routes={routes}>
+          <ScrollToTop />
+          <Nav>
+            <Outlet />
+          </Nav>
+          <ReactLocationDevtools initialIsOpen={false} />
+        </Router>
+      </RecoilRoot>
+    </div>
   )
 }
 

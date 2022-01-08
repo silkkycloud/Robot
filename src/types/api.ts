@@ -2,7 +2,7 @@
 Piped API response types
  */
 
-export type Suggestions = string[]
+export type SuggestionsType = string[]
 
 export type StreamType = {
   url: string

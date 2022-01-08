@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ForwardedRef } from 'react'
 
 import { timeFormat, numberFormat } from '../functions/format'
 
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-location'
 import {
   Box,
   Image,
@@ -22,6 +22,7 @@ import {
 import { HiCheckCircle } from 'react-icons/hi'
 
 interface VideoProps {
+  height?: number
   url: string
   title: string
   thumbnail: string
@@ -34,62 +35,67 @@ interface VideoProps {
   uploaderVerified?: boolean
 }
 
-const Video = (props: VideoProps) => {
-  const bgColor = useColorModeValue('main.light', 'main.dark')
-  const normalColor = useColorModeValue('text.light', 'text.dark')
+const Video = React.forwardRef(
+  (props: VideoProps, ref: ForwardedRef<HTMLDivElement>) => {
+    const bgColor = useColorModeValue('main.light', 'main.dark')
+    const normalColor = useColorModeValue('text.light', 'text.dark')
 
-  return (
-    <LinkBox display="block" overflow="hidden" experimental_spaceY={4}>
-      {/* Thumbnail */}
-      <LinkOverlay as={RouterLink} to={props.url}>
-        <AspectRatio ratio={16 / 9}>
-          <Image
-            fit="fill"
-            minHeight="100%"
-            minWidth="100%"
-            src={props.thumbnail}
-            loading="lazy"
-            alt={props.title}
-            htmlWidth={210}
-            htmlHeight={118}
-            bg={bgColor}
-          />
-        </AspectRatio>
-        <Box pos="relative">
-          <Box pos="absolute" bottom={0} right={0} pb={1} pr={1}>
-            <Badge px={1.5} py={0.5} colorScheme="blackAlpha" variant="solid">
-              {timeFormat(props.duration)}
-            </Badge>
-          </Box>
-        </Box>
-      </LinkOverlay>
-
-      {/* Details */}
-      <Flex flexDir="row" pos="relative">
-        {props.uploaderAvatar && props.uploaderUrl && (
-          <RouterLink to={props.uploaderUrl}>
-            <Box display="block" mr={3}>
-              <Avatar
-                borderRadius="full"
-                size="md"
-                src={props.uploaderAvatar}
-                loading="lazy"
-                name={props.uploaderName}
-                bg={bgColor}
-              />
+    return (
+      <LinkBox
+        ref={ref}
+        display="block"
+        overflow="hidden"
+        experimental_spaceY={4}
+      >
+        {/* Thumbnail */}
+        <LinkOverlay as={RouterLink} to={props.url}>
+          <AspectRatio ratio={16 / 9}>
+            <Image
+              fit="fill"
+              minHeight="100%"
+              minWidth="100%"
+              src={props.thumbnail}
+              loading="lazy"
+              alt={props.title}
+              htmlWidth={210}
+              htmlHeight={118}
+              bg={bgColor}
+            />
+          </AspectRatio>
+          <Box pos="relative">
+            <Box pos="absolute" bottom={0} right={0} pb={1} pr={1}>
+              <Badge px={1.5} colorScheme="blackAlpha" variant="solid">
+                {timeFormat(props.duration)}
+              </Badge>
             </Box>
-          </RouterLink>
-        )}
-        <Box experimental_spaceY={1} pr={2}>
-          <LinkOverlay as={RouterLink} to={props.url}>
-            <Heading as="h3" size="xs" noOfLines={2}>
-              {props.title}
-            </Heading>
-          </LinkOverlay>
-          <Box mt={1}>
+          </Box>
+        </LinkOverlay>
+
+        {/* Details */}
+        <Flex flexDir="row" pos="relative">
+          {props.uploaderAvatar && props.uploaderUrl && (
+            <RouterLink to={props.uploaderUrl}>
+              <Box display="block" mr={3}>
+                <Avatar
+                  borderRadius="full"
+                  size="md"
+                  src={props.uploaderAvatar}
+                  loading="lazy"
+                  name={props.uploaderName}
+                  bg={bgColor}
+                />
+              </Box>
+            </RouterLink>
+          )}
+          <Box pr={2}>
+            <LinkOverlay as={RouterLink} to={props.url}>
+              <Heading as="h3" size="xs" noOfLines={2}>
+                {props.title}
+              </Heading>
+            </LinkOverlay>
             {props.uploaderName && props.uploaderUrl && (
               <RouterLink to={props.uploaderUrl}>
-                <Flex alignItems="center" color={normalColor}>
+                <Flex mt={1} alignItems="center" color={normalColor}>
                   <Text fontSize={{ base: 'xs', '2xl': 'sm' }} noOfLines={1}>
                     {props.uploaderName}
                   </Text>
@@ -99,17 +105,16 @@ const Video = (props: VideoProps) => {
                 </Flex>
               </RouterLink>
             )}
-            <Flex flexDir="row" alignItems="center">
-              <Text fontSize="xs" color={normalColor}>
-                {numberFormat(props.views)} views &#8226; {props.uploadedDate}
-              </Text>
-            </Flex>
+            <Text fontSize="xs" color={normalColor} noOfLines={2}>
+              {numberFormat(props.views)} views &#8226; {props.uploadedDate}
+            </Text>
           </Box>
-        </Box>
-      </Flex>
-    </LinkBox>
-  )
-}
+        </Flex>
+      </LinkBox>
+    )
+  }
+)
+Video.displayName = 'Video'
 
 export const LoadingVideo = () => {
   const startColor = useColorModeValue('gray.300', 'neutral.800')

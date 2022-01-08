@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import LazyLoad from 'react-lazyload'
 import { Box, SimpleGrid } from '@chakra-ui/react'
-import Video, { LoadingVideo, LoadingVideos } from '../components/Video'
+import Video, { LoadingVideos } from '../components/Video'
 import { TrendingType } from '../types/api'
 
 import axios from 'axios'
@@ -53,39 +52,30 @@ export const useFetchTrending = (region: string): [TrendingType, boolean] => {
   return [data, loading]
 }
 
-interface TrendingVideosProps {
-  trendingData: TrendingType
-}
-
-const TrendingVideos = React.memo((props: TrendingVideosProps) => (
-  <>
-    {props.trendingData.map((video, i: number) => (
-      <LazyLoad
-        key={i.toString()}
-        placeholder={<LoadingVideo />}
-        offset={500}
-        unmountIfInvisible
-      >
-        <Video
-          url={video.url}
-          title={video.title}
-          thumbnail={video.thumbnail}
-          uploaderName={video.uploaderName}
-          uploaderUrl={video.uploaderUrl}
-          uploaderAvatar={video.uploaderAvatar}
-          uploadedDate={video.uploadedDate}
-          duration={video.duration}
-          views={video.views}
-          uploaderVerified={video.uploaderVerified}
-        />
-      </LazyLoad>
-    ))}
-  </>
-))
-TrendingVideos.displayName = 'TrendingVideos'
-
 const TrendingPage = () => {
-  const [trendingResults, trendingLoading] = useFetchTrending('US')
+  const [trending, trendingLoading] = useFetchTrending('US')
+
+  let trendingVideos
+
+  if (trendingLoading) {
+    trendingVideos = <LoadingVideos />
+  } else {
+    trendingVideos = trending.map((video, index) => (
+      <Video
+        key={index}
+        url={video.url}
+        title={video.title}
+        thumbnail={video.thumbnail}
+        uploaderName={video.uploaderName}
+        uploaderUrl={video.uploaderUrl}
+        uploaderAvatar={video.uploaderAvatar}
+        uploadedDate={video.uploadedDate}
+        duration={video.duration}
+        views={video.views}
+        uploaderVerified={video.uploaderVerified}
+      />
+    ))
+  }
 
   return (
     <Box py={6} px={{ base: 4, sm: 6, lg: 8 }} mx="auto">
@@ -94,11 +84,7 @@ const TrendingPage = () => {
         spacingX={{ sm: 4, md: 3 }}
         spacingY={{ base: 5, sm: 10 }}
       >
-        {trendingLoading ? (
-          <LoadingVideos />
-        ) : (
-          <TrendingVideos trendingData={trendingResults} />
-        )}
+        {trendingVideos}
       </SimpleGrid>
     </Box>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link as RouterLink, useLocation } from 'react-router-dom'
+import { Link as RouterLink, useRouter } from 'react-location'
 import { Flex, Icon, useColorModeValue } from '@chakra-ui/react'
 import Button from './Button'
 import { AiFillFire, AiFillHeart } from 'react-icons/ai'
@@ -49,8 +49,6 @@ interface NavLinkProps {
 }
 
 export const NavLink = (props: NavLinkProps) => {
-  const { pathname } = useLocation()
-
   const selectedBgColor = useColorModeValue(
     'background.light',
     'background.dark'
@@ -58,14 +56,20 @@ export const NavLink = (props: NavLinkProps) => {
   const selectedColor = useColorModeValue('red.600', 'white')
   const normalColor = useColorModeValue('text.light', 'text.dark')
 
+  const router = useRouter()
+
   return (
     <Button
       as={RouterLink}
       to={props.href}
       key={props.name}
       p={2}
-      color={pathname === props.href ? selectedColor : normalColor}
-      bg={pathname === props.href ? selectedBgColor : ''}
+      color={
+        router.state.location.pathname === props.href
+          ? selectedColor
+          : normalColor
+      }
+      bg={router.state.location.pathname === props.href ? selectedBgColor : ''}
       onClick={props.onClick}
     >
       <Flex flexDir="row" alignItems="center">
@@ -76,7 +80,11 @@ export const NavLink = (props: NavLinkProps) => {
           w={6}
           h={6}
           aria-hidden="true"
-          color={pathname === props.href ? 'red.600' : normalColor}
+          color={
+            router.state.location.pathname === props.href
+              ? 'red.600'
+              : normalColor
+          }
         />
         {props.name}
       </Flex>

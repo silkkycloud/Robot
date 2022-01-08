@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-location'
 import {
   AspectRatio,
   Avatar,
@@ -152,14 +152,9 @@ export const LoadingWideVideo = () => {
       {/* Details */}
       <Flex flex={1} flexDir="column" experimental_spaceY={1}>
         <Skeleton startColor={startColor} endColor={endColor}>
-          <Heading as="h2" size="sm" noOfLines={2}>
-            Lorem ipsum dolor sit amet
-          </Heading>
+          Lorem ipsum dolor sit amet
         </Skeleton>
         <Box mt={1}>
-          <Skeleton startColor={startColor} endColor={endColor} maxW={20}>
-            <Text fontSize="xs">Lorem ipsum</Text>
-          </Skeleton>
           <Flex mt={{ base: 0, sm: 3 }} flexDir="row" alignItems="center">
             <SkeletonCircle
               display={{ base: 'none', sm: 'block' }}
@@ -173,7 +168,7 @@ export const LoadingWideVideo = () => {
               startColor={startColor}
               endColor={endColor}
             >
-              <Text fontSize="xs">Lorem ipsum</Text>
+              Lorem ipsum
             </Skeleton>
           </Flex>
         </Box>

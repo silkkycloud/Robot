@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
-import { useLocation, useParams } from 'react-router-dom'
+import { useMatch, useRouter } from 'react-location'
 
 import axios from 'axios'
 
@@ -14,7 +14,7 @@ import useScrollPosition from '../hooks/useScrollPosition'
 
 export const useFetchChannel = (
   channelPrefix: string,
-  channelId: string | undefined
+  channelId: string | unknown
 ): [ChannelType, Dispatch<SetStateAction<ChannelType>>, boolean] => {
   const apiUrl = useRecoilValue(apiUrlState)
   const [data, setData] = useState<ChannelType>({} as ChannelType)
@@ -62,10 +62,12 @@ export const useFetchChannel = (
 }
 
 const ChannelPage = () => {
+  const router = useRouter()
   const apiUrl = useRecoilValue(apiUrlState)
-  const { pathname } = useLocation()
-  const basePath = pathname.split('/')[1]
-  const { id } = useParams()
+  const basePath = router.state.location.pathname.split('/')[1]
+  const {
+    params: { id },
+  } = useMatch()
 
   const [channelResults, setChannel, channelLoading] = useFetchChannel(
     `/${basePath}/`,
