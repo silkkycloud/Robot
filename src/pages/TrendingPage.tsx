@@ -14,10 +14,7 @@ const TrendingPage = () => {
   const [trending, setTrending] = useState<Stream[]>([])
   const region = useRecoilValue(regionState)
 
-  const { isLoading: isLoadingTrending, refetch: fetchTrending } = useQuery<
-    Stream[],
-    Error
-  >(
+  const { isLoading: isLoadingTrending } = useQuery<Stream[], Error>(
     'trending',
     async () => {
       return await ApiService.fetchTrending(region)
