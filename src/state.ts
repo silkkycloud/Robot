@@ -16,6 +16,12 @@ export const versionState = atom({
 
 export const apiUrlState = atom({
   key: 'apiUrlState',
-  default: 'https://api.piped.silkky.cloud',
+  default: process.env.REACT_APP_API_URL,
+  effects_UNSTABLE: [persistAtom],
+})
+
+export const regionState = atom({
+  key: 'regionState',
+  default: 'US',
   effects_UNSTABLE: [persistAtom],
 })

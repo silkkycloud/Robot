@@ -22,10 +22,10 @@ import urlify from '../functions/urlify'
 import { purifyHTML } from '../functions/purify'
 import Video, { LoadingVideos } from './Video'
 
-import { StreamType, ChannelType } from '../types/api'
+import { Stream, ChannelType } from '../types/api'
 
 interface ChannelVideosProps {
-  streamsData: StreamType
+  streamsData: Stream[]
 }
 
 export const ChannelVideos = React.memo((props: ChannelVideosProps) => (

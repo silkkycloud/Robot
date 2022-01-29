@@ -1,63 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import React, { useState } from 'react'
+import { useQuery } from 'react-query'
 
 import { Box, SimpleGrid } from '@chakra-ui/react'
 import Video, { LoadingVideos } from '../components/Video'
-import { TrendingType } from '../types/api'
+import { Stream } from '../types/api'
 
-import axios from 'axios'
-
-import { apiUrlState } from '../state'
-
-export const useFetchTrending = (region: string): [TrendingType, boolean] => {
-  const apiUrl = useRecoilValue(apiUrlState)
-  const [data, setData] = useState<TrendingType>([] as TrendingType)
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    let isMounted = true
-
-    const ac = new AbortController()
-
-    const fetchTrending = () => {
-      if (isMounted) setLoading(true)
-      axios
-        .get(apiUrl + '/trending', {
-          signal: ac.signal,
-          params: {
-            region: region,
-          },
-        })
-        .then((res) => {
-          if (isMounted) {
-            setData(res.data)
-            setLoading(false)
-          }
-        })
-        .catch((error) => {
-          if (isMounted) {
-            setLoading(false)
-            console.log(error)
-          }
-        })
-    }
-
-    fetchTrending()
-    return () => {
-      ac.abort()
-      isMounted = false
-    }
-  }, [region, apiUrl])
-
-  return [data, loading]
-}
+import ApiService from '../ApiService'
+import axios, { AxiosError } from 'axios'
+import { regionState } from '../state'
+import { useRecoilValue } from 'recoil'
 
 const TrendingPage = () => {
-  const [trending, trendingLoading] = useFetchTrending('US')
+  const [trending, setTrending] = useState<Stream[]>([])
+  const region = useRecoilValue(regionState)
+
+  const { isLoading: isLoadingTrending, refetch: fetchTrending } = useQuery<
+    Stream[],
+    Error
+  >(
+    'trending',
+    async () => {
+      return await ApiService.fetchTrending(region)
+    },
+    {
+      onSuccess: (res) => {
+        setTrending(res)
+      },
+      onError: (err: AxiosError | Error) => {
+        if (axios.isAxiosError(err)) {
+          setTrending(err.response?.data)
+        }
+      },
+    }
+  )
 
   let trendingVideos
 
-  if (trendingLoading) {
+  if (isLoadingTrending) {
     trendingVideos = <LoadingVideos />
   } else {
     trendingVideos = trending.map((video, index) => (

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { ReactLocation, Router, Outlet, useRouter, Route } from 'react-location'
 import { ReactLocationDevtools } from 'react-location-devtools'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { RecoilRoot } from 'recoil'
 
 import Nav from './components/Nav'
@@ -63,18 +65,25 @@ const routes: Route[] = [
 ]
 
 const location = new ReactLocation()
+const queryClient = new QueryClient()
 
 const App = () => {
   return (
     <div id="app">
       <RecoilRoot>
-        <Router location={location} routes={routes}>
-          <ScrollToTop />
-          <Nav>
-            <Outlet />
-          </Nav>
-          <ReactLocationDevtools initialIsOpen={false} />
-        </Router>
+        <QueryClientProvider client={queryClient}>
+          <Router location={location} routes={routes}>
+            <ScrollToTop />
+            <Nav>
+              <Outlet />
+            </Nav>
+            <ReactLocationDevtools
+              initialIsOpen={false}
+              position="bottom-left"
+            />
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+          </Router>
+        </QueryClientProvider>
       </RecoilRoot>
     </div>
   )

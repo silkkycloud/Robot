@@ -4,7 +4,7 @@ Piped API response types
 
 export type SuggestionsType = string[]
 
-export type StreamType = {
+export type Stream = {
   url: string
   title: string
   thumbnail: string
@@ -15,7 +15,7 @@ export type StreamType = {
   duration: number
   views: number
   uploaderVerified: boolean
-}[]
+}
 
 export type Search = {
   items?: {
@@ -42,19 +42,6 @@ export type Search = {
   message?: string
 }
 
-export type TrendingType = {
-  url: string
-  title: string
-  thumbnail: string
-  uploaderName: string
-  uploaderUrl: string
-  uploaderAvatar: string
-  uploadedDate: string
-  duration: number
-  views: number
-  uploaderVerified: boolean
-}[]
-
 export type ChannelType = {
   id: string
   name: string
@@ -64,18 +51,7 @@ export type ChannelType = {
   nextpage?: string
   subscriberCount: number
   verified: boolean
-  relatedStreams?: {
-    url: string
-    title: string
-    thumbnail: string
-    uploaderName: string
-    uploaderUrl: string
-    uploaderAvatar: string
-    uploadedDate: string
-    duration: number
-    views: number
-    uploaderVerified: boolean
-  }[]
+  relatedStreams?: Stream[]
   // Channel API Errors (eg. Channel does not exist)
   error?: string
   message?: string
