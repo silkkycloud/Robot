@@ -9,6 +9,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 import { Dict } from '@chakra-ui/utils'
 
+import './index.css'
 import '@fontsource/inter/variable.css'
 
 /*
